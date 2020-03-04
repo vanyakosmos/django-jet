@@ -1,20 +1,19 @@
-import json
+import logging
+import operator
+from functools import reduce
+
 from django import forms
+from django.apps.registry import apps
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-import operator
 
 from jet.models import Bookmark, PinnedApplication
 from jet.utils import get_model_instance_label, user_is_authenticated
-from functools import reduce
 
-try:
-    from django.apps import apps
-    get_model = apps.get_model
-except ImportError:
-    from django.db.models.loading import get_model
+
+logger = logging.getLogger(__name__)
 
 
 class AddBookmarkForm(forms.ModelForm):
@@ -113,8 +112,9 @@ class ModelLookupForm(forms.Form):
             raise ValidationError('error')
 
         try:
-            self.model_cls = get_model(data['app_label'], data['model'])
-        except:
+            self.model_cls = apps.get_model(data['app_label'], data['model'])
+        except Exception as e:
+            logger.debug(e)
             raise ValidationError('error')
 
         content_type = ContentType.objects.get_for_model(self.model_cls)
