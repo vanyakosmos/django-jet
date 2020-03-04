@@ -2,7 +2,7 @@ from jet.dashboard import modules
 from jet.dashboard.dashboard import Dashboard
 
 
-class TestIndexDashboard(Dashboard):
+class TrialIndexDashboard(Dashboard):
     columns = 3
     init_with_context_called = False
 
@@ -33,7 +33,7 @@ class TestIndexDashboard(Dashboard):
         ))
 
 
-class TestAppIndexDashboard(Dashboard):
+class TrialAppIndexDashboard(Dashboard):
     columns = 3
     init_with_context_called = False
 

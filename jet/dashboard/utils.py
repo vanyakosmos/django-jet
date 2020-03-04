@@ -1,5 +1,9 @@
+import logging
 from importlib import import_module
 from jet.dashboard import settings
+
+
+logger = logging.getLogger(__name__)
 
 
 def get_current_dashboard(location):
@@ -15,6 +19,11 @@ def get_current_dashboard(location):
     try:
         module = import_module(module)
         index_dashboard_cls = getattr(module, cls)
-        return index_dashboard_cls
     except ImportError:
-        return None
+        index_dashboard_cls = None
+
+    if index_dashboard_cls is None:
+        logger.warning(f"Unable to import dashboard from {path!r}. "
+                       f"Make sure that JET_INDEX_DASHBOARD and JET_APP_INDEX_DASHBOARD "
+                       f"are configured correctly.")
+    return index_dashboard_cls

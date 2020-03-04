@@ -1,14 +1,11 @@
 from django.contrib.auth.models import User
-try:
-    from django.core.urlresolvers import reverse
-except ImportError: # Django 1.11
-    from django.urls import reverse
+from django.test import Client, TestCase
+from django.urls import reverse
 
-from django.test import TestCase, Client
 from jet.dashboard.dashboard import Dashboard
-from jet.dashboard.modules import LinkList, RecentActions
 from jet.dashboard.models import UserDashboardModule
-from jet.tests.dashboard import TestIndexDashboard
+from jet.dashboard.modules import LinkList, RecentActions
+from tests.test_project.dashboard import TrialIndexDashboard
 
 
 class DashboardTestCase(TestCase):
@@ -45,7 +42,7 @@ class DashboardTestCase(TestCase):
             column=0,
             order=1
         )
-        self.dashboard = TestIndexDashboard({'request': self.Request(self.admin_user)})
+        self.dashboard = TrialIndexDashboard({'request': self.Request(self.admin_user)})
 
     def test_custom_columns(self):
         self.assertEqual(self.dashboard.columns, 3)
@@ -78,8 +75,9 @@ class DashboardTestCase(TestCase):
         self.assertIsNone(dashboard.app_label)
 
     def test_app_index_dashboard_view(self):
-        app_label = 'tests'
-        response = self.admin.get(reverse('admin:app_list', args=(app_label,)))
+        app_label = 'test_project'
+        url = reverse('admin:app_list', args=(app_label,))
+        response = self.admin.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTrue('dashboard' in response.context)
 

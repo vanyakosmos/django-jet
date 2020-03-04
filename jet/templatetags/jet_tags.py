@@ -6,7 +6,7 @@ from django import template
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.forms import CheckboxInput, ModelChoiceField, ModelMultipleChoiceField, Select, SelectMultiple
 from django.urls import reverse
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_str
 from django.utils.formats import get_format
 from django.utils.safestring import mark_safe
 
@@ -213,7 +213,7 @@ def jet_popup_response_data(context):
     return json.dumps({
         'action': context.get('action'),
         'value': context.get('value') or context.get('pk_value'),
-        'obj': smart_text(context.get('obj')),
+        'obj': smart_str(context.get('obj')),
         'new_value': context.get('new_value')
     })
 

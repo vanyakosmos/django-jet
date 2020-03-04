@@ -1,27 +1,26 @@
 from django import forms
-try:
-    from django.core.urlresolvers import reverse
-except ImportError: # Django 1.11
-    from django.urls import reverse
-
+from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
-from jet.templatetags.jet_tags import jet_select2_lookups, jet_next_object, jet_previous_object
-from jet.tests.models import TestModel, SearchableTestModel
 from django.test.client import RequestFactory
+from django.urls import reverse
+
+from jet.templatetags.jet_tags import jet_next_object, jet_previous_object, jet_select2_lookups
+from .test_project.models import SearchableTrialModel, TrialModel
+
 
 class TagsTestCase(TestCase):
     def setUp(self):
         self.models = []
         self.searchable_models = []
 
-        self.models.append(TestModel.objects.create(field1='first', field2=1))
-        self.models.append(TestModel.objects.create(field1='second', field2=2))
-        self.searchable_models.append(SearchableTestModel.objects.create(field1='first', field2=1))
-        self.searchable_models.append(SearchableTestModel.objects.create(field1='second', field2=2))
+        self.models.append(TrialModel.objects.create(field1='first', field2=1))
+        self.models.append(TrialModel.objects.create(field1='second', field2=2))
+        self.searchable_models.append(SearchableTrialModel.objects.create(field1='first', field2=1))
+        self.searchable_models.append(SearchableTrialModel.objects.create(field1='second', field2=2))
 
     def test_select2_lookups(self):
         class TestForm(forms.Form):
-            form_field = forms.ModelChoiceField(SearchableTestModel.objects)
+            form_field = forms.ModelChoiceField(SearchableTrialModel.objects)
 
         value = self.searchable_models[0]
 
@@ -35,7 +34,7 @@ class TagsTestCase(TestCase):
 
     def test_select2_lookups_posted(self):
         class TestForm(forms.Form):
-            form_field = forms.ModelChoiceField(SearchableTestModel.objects)
+            form_field = forms.ModelChoiceField(SearchableTrialModel.objects)
 
         value = self.searchable_models[0]
 
@@ -49,7 +48,7 @@ class TagsTestCase(TestCase):
 
     def test_non_select2_lookups(self):
         class TestForm(forms.Form):
-            form_field = forms.ModelChoiceField(TestModel.objects)
+            form_field = forms.ModelChoiceField(TrialModel.objects)
 
         value = self.searchable_models[0]
 
@@ -66,8 +65,8 @@ class TagsTestCase(TestCase):
         preserved_filters = '_changelist_filters=o%%3D%d' % ordering_field
 
         expected_url = reverse('admin:%s_%s_change' % (
-            TestModel._meta.app_label,
-            TestModel._meta.model_name
+            TrialModel._meta.app_label,
+            TrialModel._meta.model_name,
         ), args=(self.models[1].pk,)) + '?' + preserved_filters
 
         context = {
@@ -75,6 +74,7 @@ class TagsTestCase(TestCase):
             'preserved_filters': preserved_filters,
             'request': RequestFactory().get(expected_url),
         }
+        context['request'].user = AnonymousUser()  # should be populated by SessionMiddleware
 
         actual_url = jet_next_object(context)['url']
 
@@ -86,8 +86,8 @@ class TagsTestCase(TestCase):
         preserved_filters = '_changelist_filters=o%%3D%d' % ordering_field
 
         changelist_url = reverse('admin:%s_%s_change' % (
-            TestModel._meta.app_label,
-            TestModel._meta.model_name
+            TrialModel._meta.app_label,
+            TrialModel._meta.model_name
         ), args=(self.models[1].pk,)) + '?' + preserved_filters
 
         context = {
@@ -95,6 +95,7 @@ class TagsTestCase(TestCase):
             'preserved_filters': preserved_filters,
             'request': RequestFactory().get(changelist_url),
         }
+        context['request'].user = AnonymousUser()  # should be populated by SessionMiddleware
 
         previous_object = jet_previous_object(context)
         expected_object = None

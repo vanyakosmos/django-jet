@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class TestModel(models.Model):
+class TrialModel(models.Model):
     field1 = models.CharField(max_length=255)
     field2 = models.IntegerField()
 
@@ -9,14 +9,14 @@ class TestModel(models.Model):
         return '%s%d' % (self.field1, self.field2)
 
 
-class RelatedToTestModel(models.Model):
-    field = models.ForeignKey(TestModel, on_delete=models.CASCADE)
+class RelatedToTrialModel(models.Model):
+    field = models.ForeignKey(TrialModel, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.field
 
 
-class SearchableTestModel(models.Model):
+class SearchableTrialModel(models.Model):
     field1 = models.CharField(max_length=255)
     field2 = models.IntegerField()
 
@@ -25,4 +25,4 @@ class SearchableTestModel(models.Model):
 
     @staticmethod
     def autocomplete_search_fields():
-        return 'field1'
+        return 'field1',

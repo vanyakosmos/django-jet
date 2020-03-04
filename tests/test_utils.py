@@ -1,9 +1,11 @@
-from datetime import datetime, date
 import json
+from datetime import date, datetime
+
 from django.contrib.admin import AdminSite
 from django.test import TestCase
-from jet.tests.models import TestModel
-from jet.utils import JsonResponse, get_model_instance_label, get_app_list, get_admin_site, LazyDateTimeEncoder
+
+from jet.utils import JsonResponse, LazyDateTimeEncoder, get_admin_site, get_app_list, get_model_instance_label
+from .test_project.models import TrialModel
 
 
 class UtilsTestCase(TestCase):
@@ -17,7 +19,7 @@ class UtilsTestCase(TestCase):
     def test_get_model_instance_label(self):
         field1 = 'value'
         field2 = 2
-        pinned_application = TestModel.objects.create(field1=field1, field2=field2)
+        pinned_application = TrialModel.objects.create(field1=field1, field2=field2)
         self.assertEqual(get_model_instance_label(pinned_application), '%s%d' % (field1, field2))
 
     def test_get_app_list(self):
@@ -67,4 +69,3 @@ class UtilsTestCase(TestCase):
     def test_lazy_date_time_encoder_dict(self):
         encoder = LazyDateTimeEncoder()
         self.assertEqual(encoder.encode({'key': 1}), '{"key": 1}')
-

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from jet.tests.models import TestModel, RelatedToTestModel
+
+from .models import RelatedToTrialModel, TrialModel
 
 
 class TestModelAdmin(admin.ModelAdmin):
@@ -9,5 +10,6 @@ class TestModelAdmin(admin.ModelAdmin):
 class RelatedToTestModelAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(TestModel, TestModelAdmin)
-admin.site.register(RelatedToTestModel, RelatedToTestModelAdmin)
+
+admin.site.register(TrialModel, TestModelAdmin)
+admin.site.register(RelatedToTrialModel, RelatedToTestModelAdmin)
