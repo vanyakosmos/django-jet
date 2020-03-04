@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "django-jet"
-version = "1.0.7"
+name = "jet"
+version = "1.0.8"
 description = "Modern template for Django admin interface with improved functionality"
 authors = ["Denis Kildishev <support@jet.geex-arts.com>", "Bachynin Ivan <bachynin.i@gmail.com>"]
 license = "AGPL-3.0"
