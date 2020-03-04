@@ -2,20 +2,10 @@
 Django JET
 ==========
 
-.. image:: https://travis-ci.org/geex-arts/django-jet.svg?branch=master
-    :target: https://travis-ci.org/geex-arts/django-jet
+.. image:: https://travis-ci.org/vanyakosmos/django-jet.svg?branch=dev
+    :target: https://travis-ci.org/vanyakosmos/django-jet
 
 **Modern template for Django admin interface with improved functionality**
-
-+-----------------------------------------------------------------------------------------------------------------------------------+
-| Attention! **NEW JET**                                                                                                            |
-+===================================================================================================================================+
-| **We are proud to announce completely new Jet. Please check out Live Demo.**                                                      |
-|                                                                                                                                   |
-| Developing of new features for Django Jet will be frozen, only critical bugs will be fixed.                                       |
-+-----------------------------------------------------------------------------------------------------------------------------------+
-| `Live Demo <https://github.com/jet-admin/jet-bridge>`_                                                                            |
-+-----------------------------------------------------------------------------------------------------------------------------------+
 
 
 Django JET has two kinds of licenses: open-source (AGPLv3) and commercial. Please note that using AGPLv3
@@ -31,12 +21,10 @@ and applications without the provisions of the AGPLv3.
     :align: center
     
 * Home page: http://jet.geex-arts.com/
-* **New Jet**: `Live Demo <https://app.jetadmin.io/demo?utm_source=jet&utm_medium=banner&utm_campaign=github&utm_content=link&utm_term=promo>`_
 * Live Demo: http://demo.jet.geex-arts.com/admin/
 * Documentation: http://jet.readthedocs.org/
-* libi.io http://libi.io/library/1683/django-jet
 * PyPI: https://pypi.python.org/pypi/django-jet
-* Support: support@jet.geex-arts.com
+
 
 Why Django JET?
 ===============
@@ -108,25 +96,14 @@ Installation
         },
     ]
 
-.. warning::
-    Before Django 1.8 you should specify context processors different way. Also use ``django.core.context_processors.request`` instead of ``django.template.context_processors.request``.
-
-    .. code:: python
-
-        from django.conf import global_settings
-
-        TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-            'django.core.context_processors.request',
-        )
-
 * Add URL-pattern to the urlpatterns of your Django project urls.py file (they are needed for related–lookups and autocompletes):
 
 .. code:: python
 
     urlpatterns = patterns(
         '',
-        url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-        url(r'^admin/', include(admin.site.urls)),
+        path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+        path('admin/', include(admin.site.urls)),
         ...
     )
 
@@ -135,9 +112,7 @@ Installation
 .. code:: python
 
     python manage.py migrate jet
-    # or 
-    python manage.py syncdb
-        
+
 * Collect static if you are in production environment:
 
 .. code:: python
@@ -170,9 +145,9 @@ Dashboard installation
 
     urlpatterns = patterns(
         '',
-        url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-        url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
-        url(r'^admin/', include(admin.site.urls)),
+        path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+        path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+        path('admin/', include(admin.site.urls)),
         ...
     )
 
@@ -187,14 +162,9 @@ Dashboard installation
 .. code:: python
 
     python manage.py migrate dashboard
-    # or
-    python manage.py syncdb
 
 * Collect static if you are in production environment:
 
 .. code:: python
 
         python manage.py collectstatic
-
-
-
