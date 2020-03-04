@@ -2,8 +2,8 @@
 Django JET
 ==========
 
-.. image:: https://travis-ci.org/vanyakosmos/django-jet.svg?branch=dev
-    :target: https://travis-ci.org/vanyakosmos/django-jet
+.. image:: https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg
+    :target: https://github.com/vanyakosmos/django-jet/actions?workflow=test
 
 **Modern template for Django admin interface with improved functionality**
 
