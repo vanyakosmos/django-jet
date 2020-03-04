@@ -1,31 +1,31 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var ActionsUpdater = function($changelist) {
+const ActionsUpdater = function ($changelist) {
     this.$changelist = $changelist;
 };
 
 ActionsUpdater.prototype = {
     removeLabel: function($actions) {
-        var $input = $actions.find('[name="action"]').first();
+        const $input = $actions.find('[name="action"]').first();
 
-        if ($input.length == 0) {
+        if ($input.length === 0) {
             return;
         }
 
-        var $label = $($input[0].previousSibling);
+        const $label = $($input[0].previousSibling);
 
-        if ($label.get(0).nodeType == 3) {
+        if ($label.get(0).nodeType === 3) {
             $label.remove();
         }
     },
     wrapLabels: function($actions) {
-        var $wrapper = $('<div>').addClass('labels');
+        const $wrapper = $('<div>').addClass('labels');
         $actions.find('span.all, span.action-counter, span.clear, span.question')
                 .wrapAll($wrapper);
     },
     moveActions: function($actions) {
-        var $paginator = this.$changelist.find('.paginator');
-        var $wrapper = $('<div>').addClass('changelist-footer');
+        const $paginator = this.$changelist.find('.paginator');
+        const $wrapper = $('<div>').addClass('changelist-footer');
 
         $wrapper.insertAfter($paginator);
 
@@ -38,7 +38,7 @@ ActionsUpdater.prototype = {
             .append($('<div>').addClass('cf'));
     },
     run: function() {
-        var $actions = this.$changelist.find('.actions');
+        const $actions = this.$changelist.find('.actions');
 
         try {
             this.removeLabel($actions);

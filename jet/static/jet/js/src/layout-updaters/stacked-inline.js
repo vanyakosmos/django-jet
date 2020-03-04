@@ -1,13 +1,13 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var StackedInlineUpdater = function($inline) {
+const StackedInlineUpdater = function ($inline) {
     this.$inline = $inline;
 };
 
 StackedInlineUpdater.prototype = {
     updateObjectLinks: function() {
-        var $label = this.$inline.find('.inline_label');
-        var $changelink = $label.find('> .inlinechangelink');
+        const $label = this.$inline.find('.inline_label');
+        const $changelink = $label.find('> .inlinechangelink');
 
         $label
             .find('+ a')

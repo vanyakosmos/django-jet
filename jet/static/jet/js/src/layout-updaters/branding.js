@@ -1,6 +1,6 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var BrandingUpdater = function($branding) {
+const BrandingUpdater = function ($branding) {
     this.$branding = $branding;
 };
 
@@ -9,7 +9,7 @@ BrandingUpdater.prototype = {
         $branding.detach().prependTo($('.sidebar-wrapper')).css('height', $branding.outerHeight());
     },
     run: function() {
-        var $branding = this.$branding;
+        const $branding = this.$branding;
 
         try {
             this.move($branding);
@@ -25,7 +25,7 @@ $(document).ready(function() {
     $('#branding').each(function() {
         new BrandingUpdater($(this)).run();
     });
-    if ($('body.login').length != 0) {
+    if ($('body.login').length !== 0) {
         $('<img>').attr('src', '//jet.geex-arts.com/ping.gif');
     }
 });

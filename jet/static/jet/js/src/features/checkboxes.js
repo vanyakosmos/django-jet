@@ -1,12 +1,13 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var Checkboxes = function() { };
+const Checkboxes = function () {
+};
 
 Checkboxes.prototype = {
     uniqueCheckboxIdCounter: 0,
     uniqueCheckboxIdPrefix: 'unique_checkbox_id_',
     addLabelToCheckbox: function($checkbox) {
-        var checkboxId = $checkbox.attr('id')
+        const checkboxId = $checkbox.attr('id')
             ? $checkbox.attr('id')
             : this.uniqueCheckboxIdPrefix + this.uniqueCheckboxIdCounter++;
 
@@ -16,12 +17,12 @@ Checkboxes.prototype = {
             .insertAfter($checkbox);
     },
     addLabelToCheckboxes: function() {
-        var self = this;
+        const self = this;
 
         $('input[type="checkbox"]').each(function() {
-            var $checkbox = $(this);
+            const $checkbox = $(this);
 
-            if ($checkbox.attr('id') != undefined && $('label[for="' + $checkbox.attr('id') + '"]').length != 0) {
+            if ($checkbox.attr('id') !== undefined && $('label[for="' + $checkbox.attr('id') + '"]').length !== 0) {
                 return;
             }
 

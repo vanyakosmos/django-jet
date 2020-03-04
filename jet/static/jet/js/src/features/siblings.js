@@ -1,14 +1,14 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var Siblings = function($siblings) {
+const Siblings = function ($siblings) {
     this.$siblings = $siblings;
 };
 
 Siblings.prototype = {
-    moveSiblings: function($siblings) {
+    moveSiblings: function ($siblings) {
         $siblings.detach().insertBefore($('.object-tools'));
     },
-    run: function() {
+    run: function () {
         try {
             this.moveSiblings(this.$siblings);
         } catch (e) {
@@ -19,8 +19,8 @@ Siblings.prototype = {
     }
 };
 
-$(document).ready(function() {
-    $('.changeform-navigation').each(function() {
+$(document).ready(function () {
+    $('.changeform-navigation').each(function () {
         new Siblings($(this)).run();
     });
 });

@@ -1,11 +1,12 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var DeleteConfirmationUpdater = function() { };
+const DeleteConfirmationUpdater = function () {
+};
 
 DeleteConfirmationUpdater.prototype = {
     run: function() {
         try {
-            if ($('.delete-confirmation-marker').length != 0) {
+            if ($('.delete-confirmation-marker').length !== 0) {
                 $('body').addClass('delete-confirmation');
             }
         } catch (e) {

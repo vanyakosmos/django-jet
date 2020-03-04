@@ -1,6 +1,6 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var ObjectToolsUpdater = function($objectTools) {
+const ObjectToolsUpdater = function ($objectTools) {
     this.$objectTools = $objectTools;
 };
 

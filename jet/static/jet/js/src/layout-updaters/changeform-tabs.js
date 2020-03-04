@@ -1,19 +1,19 @@
-var $ = require('jquery');
-var t = require('../utils/translate');
+const $ = require('jquery');
+const t = require('../utils/translate');
 
-var ChangeFormTabsUpdater = function($changeform) {
+const ChangeFormTabsUpdater = function ($changeform) {
     this.$changeform = $changeform;
 };
 
 ChangeFormTabsUpdater.prototype = {
     findTabs: function($modules, $inlines) {
-        var tabs = [];
+        const tabs = [];
 
         $modules.each(function(i) {
-            var $module = $(this);
-            var $header = $module.find('> h2').first();
-            var title = $header.length != 0 ? $header.html() : t('General');
-            var className = 'module_' + i;
+            const $module = $(this);
+            const $header = $module.find('> h2').first();
+            const title = $header.length !== 0 ? $header.html() : t('General');
+            const className = 'module_' + i;
 
             $module.addClass(className);
             $header.remove();
@@ -25,10 +25,10 @@ ChangeFormTabsUpdater.prototype = {
         });
 
         $inlines.each(function(i) {
-            var $inline = $(this);
-            var $header = $inline.find('> h2, > fieldset.module > h2, .tabular.inline-related > .module > h2').first();
-            var title = $header.length != 0 ? $header.html() : t('General');
-            var className = 'inline_' + i;
+            const $inline = $(this);
+            const $header = $inline.find('> h2, > fieldset.module > h2, .tabular.inline-related > .module > h2').first();
+            const title = $header.length !== 0 ? $header.html() : t('General');
+            const className = 'inline_' + i;
 
             $inline.addClass(className);
             $header.remove();
@@ -46,13 +46,13 @@ ChangeFormTabsUpdater.prototype = {
             return;
         }
 
-        var $tabs = $('<ul>').addClass('changeform-tabs');
+        const $tabs = $('<ul>').addClass('changeform-tabs');
 
         $.each(tabs, function() {
-            var tab = this;
-            var $item = $('<li>')
+            const tab = this;
+            const $item = $('<li>')
                 .addClass('changeform-tabs-item');
-            var $link = $('<a>')
+            const $link = $('<a>')
                 .addClass('changeform-tabs-item-link')
                 .html(tab.title)
                 .attr('href', '#/tab/' + tab.className + '/');
@@ -64,13 +64,13 @@ ChangeFormTabsUpdater.prototype = {
         $tabs.insertBefore($contentWrappers.first());
     },
     run: function() {
-        var $container = this.$changeform.find('#content-main > form > div');
-        var $modules = $container.find('> .module');
-        var $inlines = $container.find('> .inline-group');
-        var $contentWrappers = $().add($modules).add($inlines);
+        const $container = this.$changeform.find('#content-main > form > div');
+        const $modules = $container.find('> .module');
+        const $inlines = $container.find('> .inline-group');
+        const $contentWrappers = $().add($modules).add($inlines);
 
         try {
-            var tabs = this.findTabs($modules, $inlines);
+            const tabs = this.findTabs($modules, $inlines);
             this.createTabs($contentWrappers, tabs);
         } catch (e) {
             console.error(e, e.stack);

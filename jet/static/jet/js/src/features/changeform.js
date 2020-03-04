@@ -1,7 +1,7 @@
-var $ = require('jquery');
-var t = require('../utils/translate');
+const $ = require('jquery');
+const t = require('../utils/translate');
 
-var ChangeForm = function($changeForm) {
+const ChangeForm = function ($changeForm) {
     this.$changeForm = $changeForm;
 };
 
@@ -20,14 +20,14 @@ ChangeForm.prototype = {
         this.changeDetected = true;
     },
     initUnsavedChangesWarning: function($changeForm) {
-        var self = this;
-        var $form = $changeForm.find('#content-main form');
+        const self = this;
+        const $form = $changeForm.find('#content-main form');
 
-        if ($form.length == 0) {
+        if ($form.length === 0) {
             return;
         }
 
-        var $inputs = $form.find('input, textarea, select');
+        const $inputs = $form.find('input, textarea, select');
 
         $(document).on('submit', 'form', function() {
             $(window).off('beforeunload', self.onWindowBeforeUnload);

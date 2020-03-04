@@ -1,24 +1,18 @@
 require('./../../utils/jquery-slidefade');
 
-var $ = require('jquery');
+const $ = require('jquery');
 
-require('jquery-ui/ui/core');
-require('jquery-ui/ui/widget');
-require('jquery-ui/ui/mouse');
-require('jquery-ui/ui/draggable');
-require('jquery-ui/ui/resizable');
-require('jquery-ui/ui/button');
-require('jquery-ui/ui/dialog');
+require('jquery-ui-bundle/jquery-ui.min');
 
-var SideBarApplicationPinning = function($sidebar) {
+const SideBarApplicationPinning = function ($sidebar) {
     this.$sidebar = $sidebar;
 };
 
 SideBarApplicationPinning.prototype = {
     pinToggle: function($form, $sidebar, $appItem) {
-        var self = this;
-        var $appsList = $sidebar.find('.apps-list');
-        var $pinnedAppsList = $sidebar.find('.apps-list-pinned');
+        const self = this;
+        const $appsList = $sidebar.find('.apps-list');
+        const $pinnedAppsList = $sidebar.find('.apps-list-pinned');
 
         $.ajax({
             url: $form.attr('action'),
@@ -30,7 +24,7 @@ SideBarApplicationPinning.prototype = {
                     return;
                 }
 
-                var $target = result.pinned ? $pinnedAppsList : $appsList;
+                const $target = result.pinned ? $pinnedAppsList : $appsList;
 
                 $appItem
                     .toggleClass('pinned', result.pinned)
@@ -42,15 +36,15 @@ SideBarApplicationPinning.prototype = {
         });
     },
     initApplicationPinning: function($sidebar) {
-        var self = this;
+        const self = this;
 
         $sidebar.find('.pin-toggle').on('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
-            var $appItem = $(this).closest('.app-item');
-            var appLabel = $appItem.data('app-label');
-            var $form = $sidebar.find('#toggle-application-pin-form');
+            const $appItem = $(this).closest('.app-item');
+            const appLabel = $appItem.data('app-label');
+            const $form = $sidebar.find('#toggle-application-pin-form');
 
             $form.find('input[name="app_label"]').val(appLabel);
 
@@ -63,11 +57,11 @@ SideBarApplicationPinning.prototype = {
         });
     },
     updateAppsHide: function($sidebar) {
-        var $appsList = $sidebar.find('.apps-list');
-        var $pinnedAppsList = $sidebar.find('.apps-list-pinned');
-        var $appsHide = $sidebar.find('.apps-hide');
+        const $appsList = $sidebar.find('.apps-list');
+        const $pinnedAppsList = $sidebar.find('.apps-list-pinned');
+        const $appsHide = $sidebar.find('.apps-hide');
 
-        if (($appsList.children().length == 0 || $pinnedAppsList.children().length == 0) && $appsList.is(':visible')) {
+        if (($appsList.children().length === 0 || $pinnedAppsList.children().length === 0) && $appsList.is(':visible')) {
             $appsHide.removeClass('apps-visible apps-hidden');
         } else {
             $appsHide.toggleClass('apps-visible', $appsList.is(':visible'));
@@ -75,10 +69,10 @@ SideBarApplicationPinning.prototype = {
         }
     },
     initAppsHide: function($sidebar) {
-        var self = this;
-        var $appsList = $sidebar.find('.apps-list');
-        var $pinnedAppsList = $sidebar.find('.apps-list-pinned');
-        var $appsHide = $sidebar.find('.apps-hide');
+        const self = this;
+        const $appsList = $sidebar.find('.apps-list');
+        const $pinnedAppsList = $sidebar.find('.apps-list-pinned');
+        const $appsHide = $sidebar.find('.apps-hide');
 
         $appsHide.on('click', function (e) {
             e.preventDefault();
@@ -90,7 +84,7 @@ SideBarApplicationPinning.prototype = {
         });
 
         if (localStorage['side_menu_apps_list_visible'] === 'false') {
-            if ($pinnedAppsList.children().length != 0) {
+            if ($pinnedAppsList.children().length !== 0) {
                 $appsList.hide();
             } else {
                 localStorage['side_menu_apps_list_visible'] = true;

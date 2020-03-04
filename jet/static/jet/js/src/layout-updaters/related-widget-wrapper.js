@@ -1,10 +1,11 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var RelatedWidgetWrapperUpdater = function() { };
+const RelatedWidgetWrapperUpdater = function () {
+};
 
 RelatedWidgetWrapperUpdater.prototype = {
     replaceLinkIcon: function(selector) {
-        var $img = $(selector);
+        const $img = $(selector);
 
         $('<span>')
             .addClass('related-widget-wrapper-icon')

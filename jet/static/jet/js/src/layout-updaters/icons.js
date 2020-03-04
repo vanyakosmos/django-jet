@@ -1,6 +1,7 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var Icons = function() { };
+const Icons = function () {
+};
 
 Icons.prototype = {
     updateBooleanIcons: function() {

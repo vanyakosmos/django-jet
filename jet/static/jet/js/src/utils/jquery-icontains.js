@@ -1,4 +1,4 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
 $.expr[":"].icontains = $.expr.createPseudo(function (arg) {
     return function (elem) {

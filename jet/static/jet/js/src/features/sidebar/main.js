@@ -1,14 +1,14 @@
-var $ = require('jquery');
-var SideBarApplicationPinning = require('./application-pinning');
-var SideBarBookmarks = require('./bookmarks');
-var SideBarPopup = require('./popup');
+const $ = require('jquery');
+const SideBarApplicationPinning = require('./application-pinning');
+const SideBarBookmarks = require('./bookmarks');
+const SideBarPopup = require('./popup');
 
 require('perfect-scrollbar/jquery')($);
 require('browsernizr/test/touchevents');
 require('browsernizr');
 require('jquery.cookie');
 
-var SideBar = function($sidebar) {
+const SideBar = function ($sidebar) {
     this.$sidebar = $sidebar;
 };
 
@@ -19,7 +19,7 @@ SideBar.prototype = {
         }
     },
     initSideBarToggle: function() {
-        var toggle = function(e) {
+        const toggle = function (e) {
             e.preventDefault();
             this.sideBarToggle();
         };
@@ -28,8 +28,8 @@ SideBar.prototype = {
         $(document.body).on('click', '.sidebar-backdrop', toggle.bind(this));
     },
     sideBarToggle: function() {
-        var $dependent = $('.sidebar-dependent');
-        var open = !$dependent.hasClass('sidebar-opened') && !$(document.body).hasClass('menu-pinned');
+        const $dependent = $('.sidebar-dependent');
+        const open = !$dependent.hasClass('sidebar-opened') && !$(document.body).hasClass('menu-pinned');
 
         $(document.body).toggleClass('non-scrollable', open).removeClass('menu-pinned');
         $dependent.toggleClass('sidebar-opened', open);
@@ -39,7 +39,7 @@ SideBar.prototype = {
     },
     toggleBackdrop: function(open) {
         if (open) {
-            var backdrop = $('<div/>', {class: 'sidebar-backdrop'});
+            const backdrop = $('<div/>', {class: 'sidebar-backdrop'});
             $(document.body).append(backdrop);
             backdrop.animate({opacity: 0.5}, 300);
         } else {
@@ -50,7 +50,7 @@ SideBar.prototype = {
     },
     initPinSideBar: function($sidebar) {
         $sidebar.on('click', '.sidebar-pin', (function () {
-            var $dependent = $('.sidebar-dependent');
+            const $dependent = $('.sidebar-dependent');
 
             if ($(document.body).hasClass('menu-pinned')) {
                 $dependent.removeClass('sidebar-opened');
@@ -72,13 +72,13 @@ SideBar.prototype = {
         $.cookie('sidebar_pinned', status, { expires: 365, path: '/' });
     },
     addToggleButton: function() {
-        var $button = $('<span>')
-          .addClass('sidebar-container-toggle sidebar-header-menu-icon icon-menu sidebar-toggle');
+        const $button = $('<span>')
+            .addClass('sidebar-container-toggle sidebar-header-menu-icon icon-menu sidebar-toggle');
 
         $('#container').prepend($button);
     },
     run: function() {
-        var $sidebar = this.$sidebar;
+        const $sidebar = this.$sidebar;
 
         new SideBarApplicationPinning($sidebar).run();
         new SideBarBookmarks($sidebar).run();

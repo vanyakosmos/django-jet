@@ -1,14 +1,14 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var ToolbarUpdater = function($changelist) {
+const ToolbarUpdater = function ($changelist) {
     this.$changelist = $changelist;
 };
 
 ToolbarUpdater.prototype = {
     getToolbar: function($changelist) {
-        var $toolbar = $changelist.find('#toolbar');
+        let $toolbar = $changelist.find('#toolbar');
 
-        if ($toolbar.length == 0) {
+        if ($toolbar.length === 0) {
             $toolbar = $('<div>').attr('id', 'toolbar');
             $('#changelist').prepend($toolbar);
         }
@@ -16,21 +16,21 @@ ToolbarUpdater.prototype = {
         return $toolbar;
     },
     updateToolbar: function($toolbar) {
-        var placeholder = $toolbar.find('input[type="submit"]').val();
+        const placeholder = $toolbar.find('input[type="submit"]').val();
         $toolbar.find('#searchbar').attr('placeholder', placeholder);
     },
     moveFilters: function($changelist, $toolbar) {
-        var filterName;
-        var $search = $toolbar.find('#searchbar');
+        let filterName;
+        const $search = $toolbar.find('#searchbar');
 
         $changelist.find('#changelist-filter').children().each(function() {
-            var $element = $(this);
+            const $element = $(this);
 
-            if ($element.prop('tagName') == 'H3') {
+            if ($element.prop('tagName') === 'H3') {
                 filterName = $element.text();
-            } else if ($element.prop('tagName') == 'UL') {
-                var $select = $('<select>');
-                var $items = $element.find('li');
+            } else if ($element.prop('tagName') === 'UL') {
+                const $select = $('<select>');
+                const $items = $element.find('li');
 
                 $.each($element.prop('attributes'), function() {
                     $select.attr(this.name, this.value);
@@ -43,19 +43,19 @@ ToolbarUpdater.prototype = {
                 }
 
                 $items.each(function(i) {
-                    var $item = $(this);
-                    var $link = $item.find('a');
-                    var $option = $('<option>')
+                    const $item = $(this);
+                    const $link = $item.find('a');
+                    let $option = $('<option>')
                         .text($link.text())
                         .attr('data-url', $link.attr('href'))
                         .attr('selected', $item.hasClass('selected'));
 
-                    if (i == 0 ) {
+                    if (i === 0 ) {
                         if (filterName != null) {
                             $option.text(filterName)
                         }
 
-                        var $separator = $('<option>')
+                        const $separator = $('<option>')
                             .attr('disabled', true)
                             .text('---');
 
@@ -77,8 +77,8 @@ ToolbarUpdater.prototype = {
 
                 filterName = null;
             } else if ($element.hasClass('changelist-filter-popup')) {
-                var $toggle = $element.find('.changelist-filter-popup-toggle');
-                var $content = $element.find('.changelist-filter-popup-content');
+                const $toggle = $element.find('.changelist-filter-popup-toggle');
+                const $content = $element.find('.changelist-filter-popup-content');
                 var $wrapper = $('<span>')
                     .addClass('changelist-filter-select-wrapper')
                     .append($element);
@@ -109,12 +109,12 @@ ToolbarUpdater.prototype = {
     },
     fixFloatLineBreak: function() {
         $('#content-main').each(function() {
-            var $content = $(this);
+            const $content = $(this);
 
             $.each(['#toolbar', '.object-tools', 'changeform-navigation'], function(i, selector) {
-                var $element = $content.find(selector).first();
+                const $element = $content.find(selector).first();
 
-                if ($element.length == 0) {
+                if ($element.length === 0) {
                     return;
                 }
 
@@ -127,7 +127,7 @@ ToolbarUpdater.prototype = {
         });
     },
     run: function() {
-        var $toolbar = this.getToolbar(this.$changelist);
+        const $toolbar = this.getToolbar(this.$changelist);
 
         try {
             this.updateToolbar($toolbar);

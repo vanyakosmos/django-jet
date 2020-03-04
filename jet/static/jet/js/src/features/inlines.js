@@ -1,19 +1,19 @@
-var $ = require('jquery');
-var CompactInline = require('./compact-inline');
+const $ = require('jquery');
+const CompactInline = require('./compact-inline');
 
-var Inline = function($inline) {
+const Inline = function ($inline) {
     this.$inline = $inline;
 };
 
 Inline.prototype = {
     initAddRow: function($inline) {
         $inline.on('click', '.add-row a', function() {
-            var $inlineItem = $inline.find('.inline-related:not(.empty-form)').last();
+            const $inlineItem = $inline.find('.inline-related:not(.empty-form)').last();
             $inline.trigger('inline-group-row:added', [$inlineItem]);
         });
     },
     run: function() {
-        var $inline = this.$inline;
+        const $inline = this.$inline;
 
         try {
             if ($inline.hasClass('compact')) {

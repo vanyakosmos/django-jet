@@ -1,12 +1,12 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var BreadcrumbsUpdater = function($breadcrumbs) {
+const BreadcrumbsUpdater = function ($breadcrumbs) {
     this.$breadcrumbs = $breadcrumbs;
 };
 
 BreadcrumbsUpdater.prototype = {
     replaceSeparators: function($breadcrumbs) {
-        var html = $breadcrumbs.html();
+        let html = $breadcrumbs.html();
 
         html = html.replace(/›/g, '<span class="icon-arrow-right breadcrumbs-separator"></span>');
 
@@ -16,7 +16,7 @@ BreadcrumbsUpdater.prototype = {
         $breadcrumbs.scrollLeft($breadcrumbs[0].scrollWidth - $breadcrumbs.width());
     },
     run: function() {
-        var $breadcrumbs = this.$breadcrumbs;
+        const $breadcrumbs = this.$breadcrumbs;
 
         try {
             this.replaceSeparators($breadcrumbs);
@@ -30,9 +30,9 @@ BreadcrumbsUpdater.prototype = {
 };
 
 $(document).ready(function() {
-    var $breadcrumbs = $('.breadcrumbs');
+    const $breadcrumbs = $('.breadcrumbs');
 
-    if ($breadcrumbs.length == 0) {
+    if ($breadcrumbs.length === 0) {
         return;
     }
 

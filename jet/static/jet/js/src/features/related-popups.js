@@ -1,21 +1,21 @@
-var $ = require('jquery');
-var WindowStorage = require('../utils/window-storage');
+const $ = require('jquery');
+const WindowStorage = require('../utils/window-storage');
 
-var RelatedPopups = function() {
+const RelatedPopups = function () {
     this.windowStorage = new WindowStorage('relatedWindows');
 };
 
 RelatedPopups.prototype = {
     updateLinks: function($select) {
         $select.find('~ .change-related, ~ .delete-related, ~ .add-another').each(function() {
-            var $link = $(this);
-            var hrefTemplate = $link.data('href-template');
+            const $link = $(this);
+            const hrefTemplate = $link.data('href-template');
 
-            if (hrefTemplate == undefined) {
+            if (hrefTemplate === undefined) {
                 return;
             }
 
-            var value = $select.val();
+            const value = $select.val();
 
             if (value) {
                 $link.attr('href', hrefTemplate.replace('__fk__', value))
@@ -29,24 +29,24 @@ RelatedPopups.prototype = {
             return;
         }
 
-        var self = this;
+        const self = this;
 
         $row.find('select').each(function() {
-            var $select = $(this);
+            const $select = $(this);
 
             self.updateLinks($select);
 
             $select.find('~ .add-related, ~ .change-related, ~ .delete-related, ~ .add-another').each(function() {
-                var $link = $(this);
+                const $link = $(this);
 
                 $link.on('click', function(e) {
                     e.preventDefault();
 
-                    var href = $link.attr('href');
+                    let href = $link.attr('href');
 
-                    if (href != undefined) {
-                        if (href.indexOf('_popup') == -1) {
-                            href += (href.indexOf('?') == -1) ? '?_popup=1' : '&_popup=1';
+                    if (href !== undefined) {
+                        if (href.indexOf('_popup') === -1) {
+                            href += (href.indexOf('?') === -1) ? '?_popup=1' : '&_popup=1';
                         }
 
                         self.showPopup($select, href);
@@ -58,17 +58,17 @@ RelatedPopups.prototype = {
         });
 
         $row.find('input').each(function() {
-            var $input = $(this);
+            const $input = $(this);
 
             $input.find('~ .related-lookup').each(function() {
-                var $link = $(this);
+                const $link = $(this);
 
                 $link.on('click', function(e) {
                     e.preventDefault();
 
-                    var href = $link.attr('href');
+                    let href = $link.attr('href');
 
-                    href += (href.indexOf('?') == -1) ? '?_popup=1' : '&_popup=1';
+                    href += (href.indexOf('?') === -1) ? '?_popup=1' : '&_popup=1';
 
                     self.showPopup($input, href);
                 });
@@ -78,7 +78,7 @@ RelatedPopups.prototype = {
         $row.data('related-popups-links-initialized', true);
     },
     initLinks: function() {
-        var self = this;
+        const self = this;
 
         $('.form-row').each(function() {
             self.initLinksForRow($(this));
@@ -91,7 +91,7 @@ RelatedPopups.prototype = {
         });
     },
     initPopupBackButton: function() {
-        var self = this;
+        const self = this;
 
         $('.related-popup-back').on('click', function(e) {
             e.preventDefault();
@@ -99,17 +99,17 @@ RelatedPopups.prototype = {
         });
     },
     showPopup: function($input, href) {
-        var $document = $(window.top.document);
-        var $container = $document.find('.related-popup-container');
-        var $loading = $container.find('.loading-indicator');
-        var $body = $document.find('body');
-        var $popup = $('<div>')
+        const $document = $(window.top.document);
+        const $container = $document.find('.related-popup-container');
+        const $loading = $container.find('.loading-indicator');
+        const $body = $document.find('body');
+        const $popup = $('<div>')
             .addClass('related-popup')
             .data('input', $input);
-        var $iframe = $('<iframe>')
+        const $iframe = $('<iframe>')
             .attr('src', href)
-            .on('load', function() {
-                $popup.add($document.find('.related-popup-back')).fadeIn(200, 'swing', function() {
+            .on('load', function () {
+                $popup.add($document.find('.related-popup-back')).fadeIn(200, 'swing', function () {
                     $loading.hide();
                 });
             });
@@ -123,22 +123,22 @@ RelatedPopups.prototype = {
         $body.addClass('non-scrollable');
     },
     closePopup: function(response) {
-        var previousWindow = this.windowStorage.previous();
-        var self = this;
+        const previousWindow = this.windowStorage.previous();
+        const self = this;
 
         (function($) {
-            var $document = $(window.top.document);
-            var $popups = $document.find('.related-popup');
-            var $container = $document.find('.related-popup-container');
-            var $popup = $popups.last();
+            const $document = $(window.top.document);
+            const $popups = $document.find('.related-popup');
+            const $container = $document.find('.related-popup-container');
+            const $popup = $popups.last();
 
-            if (response != undefined) {
+            if (response !== undefined) {
                 self.processPopupResponse($popup, response);
             }
 
             self.windowStorage.pop();
 
-            if ($popups.length == 1) {
+            if ($popups.length === 1) {
                 $container.fadeOut(200, 'swing', function() {
                     $document.find('.related-popup-back').hide();
                     $document.find('body').removeClass('non-scrollable');
@@ -151,24 +151,24 @@ RelatedPopups.prototype = {
         })(previousWindow ? previousWindow.jet.jQuery : $);
     },
     findPopupResponse: function() {
-        var self = this;
+        const self = this;
 
         $('#django-admin-popup-response-constants').each(function() {
-            var $constants = $(this);
-            var response = $constants.data('popup-response');
+            const $constants = $(this);
+            const response = $constants.data('popup-response');
 
             self.closePopup(response);
         });
     },
     processPopupResponse: function($popup, response) {
-        var $input = $popup.data('input');
+        const $input = $popup.data('input');
 
         switch (response.action) {
             case 'change':
                 $input.find('option').each(function() {
-                    var $option = $(this);
+                    const $option = $(this);
 
-                    if ($option.val() == response.value) {
+                    if ($option.val() === response.value) {
                         $option.html(response.obj).val(response.new_value);
                     }
                 });
@@ -178,9 +178,9 @@ RelatedPopups.prototype = {
                 break;
             case 'delete':
                 $input.find('option').each(function() {
-                    var $option = $(this);
+                    const $option = $(this);
 
-                    if ($option.val() == response.value) {
+                    if ($option.val() === response.value) {
                         $option.remove();
                     }
                 });
@@ -190,7 +190,7 @@ RelatedPopups.prototype = {
                 break;
             default:
                 if ($input.is('select')) {
-                    var $option = $('<option>')
+                    let $option = $('<option>')
                         .val(response.value)
                         .html(response.obj);
 
@@ -210,7 +210,7 @@ RelatedPopups.prototype = {
         }
     },
     overrideRelatedGlobals: function() {
-        var self = this;
+        const self = this;
 
         window.showRelatedObjectLookupPopup
             = window.showAddAnotherPopup
@@ -226,7 +226,7 @@ RelatedPopups.prototype = {
         };
     },
     initDeleteRelatedCancellation: function() {
-        var self = this;
+        const self = this;
 
         $('.popup.delete-confirmation .cancel-link').on('click', function(e) {
             e.preventDefault();
@@ -234,7 +234,7 @@ RelatedPopups.prototype = {
         }).removeAttr('onclick');
     },
     initLookupLinks: function() {
-        var self = this;
+        const self = this;
 
         $("a[data-popup-opener]").click(function(e) {
             e.preventDefault();

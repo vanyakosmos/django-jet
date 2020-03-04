@@ -1,11 +1,11 @@
 require('../../utils/jquery-icontains');
 
-var $ = require('jquery');
+const $ = require('jquery');
 
 require('browsernizr/test/touchevents');
 require('browsernizr');
 
-var SideBarPopup = function($sidebar) {
+const SideBarPopup = function ($sidebar) {
     this.$sidebar = $sidebar;
 };
 
@@ -31,22 +31,22 @@ SideBarPopup.prototype = {
         }
     },
     openPopup: function($popupContainer, delay) {
-        var self = this;
+        const self = this;
 
         this.resetPopupDisplayTimeout();
 
-        delay = delay && delay != undefined ? delay : 200;
+        delay = delay || 200;
 
         this.popupDisplayTimeout = setTimeout(function() {
             self.popupDisplayTimeout = null;
 
-            var $sections = $popupContainer.find('.sidebar-popup-section');
+            const $sections = $popupContainer.find('.sidebar-popup-section');
 
             $sections.hide();
 
             if (self.$currentSectionLink) {
-                var $section = $sections.filter('.' + self.$currentSectionLink.data('popup-section-class'));
-                var $search = $section.find('.sidebar-popup-search');
+                const $section = $sections.filter('.' + self.$currentSectionLink.data('popup-section-class'));
+                const $search = $section.find('.sidebar-popup-search');
 
                 $section.show();
                 $search.val('').trigger('change').focus();
@@ -61,11 +61,11 @@ SideBarPopup.prototype = {
         }, delay);
     },
     closePopup: function($popupContainer, delay) {
-        var self = this;
+        const self = this;
 
         this.resetPopupDisplayTimeout();
 
-        delay = delay && delay != undefined ? delay : 50;
+        delay = delay || 50;
 
         this.popupDisplayTimeout = setTimeout(function() {
             self.popupDisplayTimeout = null;
@@ -80,15 +80,15 @@ SideBarPopup.prototype = {
         }, delay);
     },
     onSectionLinkInteracted: function($popupContainer, $link) {
-        var changingSection = this.$currentSectionLink && $link !== this.$currentSectionLink;
+        const changingSection = this.$currentSectionLink && $link !== this.$currentSectionLink;
 
         this.setCurrentSectionLink($link);
         this.openPopup($popupContainer, changingSection ? 500 : null);
     },
     initSectionsDisplay: function($sidebar) {
-        var self = this;
-        var $popupContainer = $sidebar.find('.sidebar-popup-container');
-        var $popup = $sidebar.find('.sidebar-popup');
+        const self = this;
+        const $popupContainer = $sidebar.find('.sidebar-popup-container');
+        const $popup = $sidebar.find('.sidebar-popup');
 
         $sidebar.find('.popup-section-link').on('mouseenter', function() {
             if (!$(document.documentElement).hasClass('touchevents')) {
@@ -119,12 +119,12 @@ SideBarPopup.prototype = {
     },
     initSectionsSearch: function($sidebar) {
         $sidebar.find('.sidebar-popup-section').each(function() {
-            var $section = $(this);
-            var $search = $section.find('.sidebar-popup-search');
-            var $items = $section.find('.sidebar-popup-list-item');
+            const $section = $(this);
+            const $search = $section.find('.sidebar-popup-search');
+            const $items = $section.find('.sidebar-popup-list-item');
 
             $search.on('change keyup', function() {
-                var text = $(this).val();
+                const text = $(this).val();
 
                 $items
                     .hide()
@@ -146,8 +146,8 @@ SideBarPopup.prototype = {
             }
         }
 
-        if (this.$currentSectionListItem == null || this.$currentSectionListItem.length == 0) {
-            var items = this.$currentSection.find('.sidebar-popup-list-item:visible');
+        if (this.$currentSectionListItem == null || this.$currentSectionListItem.length === 0) {
+            const items = this.$currentSection.find('.sidebar-popup-list-item:visible');
             this.$currentSectionListItem = next ? items.first() : items.last();
         }
 
@@ -155,20 +155,20 @@ SideBarPopup.prototype = {
         this.$currentSectionListItem.addClass('selected');
     },
     initSectionKeyboardControls: function() {
-        var self = this;
+        const self = this;
 
         $(document).keydown(function(e) {
             if (self.$currentSectionLink == null) {
                 return;
             }
 
-            if (e.which == 38) { //up
+            if (e.which === 38) { //up
                 self.moveSectionListItemSelection(false);
-            } else if (e.which == 40) { //down
+            } else if (e.which === 40) { //down
                 self.moveSectionListItemSelection(true);
-            } else if (e.which == 13) {
+            } else if (e.which === 13) {
                 if (self.$currentSectionListItem) {
-                    var $el =  self.$currentSectionListItem.find('a');
+                    const $el = self.$currentSectionListItem.find('a');
 
                     if ($el.attr('href')) {
                         document.location = $el.attr('href');
@@ -182,21 +182,21 @@ SideBarPopup.prototype = {
         });
     },
     initSectionLists: function($sidebar) {
-        var self = this;
+        const self = this;
 
         $sidebar.find('.sidebar-popup-list-item-link').on('mouseenter', function() {
             self.$currentSectionListItem = $(this).closest('.sidebar-popup-list-item');
             self.resetCurrentSectionListItems();
             self.$currentSectionListItem.addClass('selected');
         }).on('touchmove touchend', function(e) {
-            var $el = $(this);
+            const $el = $(this);
 
-            if (e.type == 'touchmove') {
+            if (e.type === 'touchmove') {
                 $el.data('element_swiped', true);
                 return;
             }
 
-            if (e.type == 'touchend' && !$el.data('element_swiped') && $el.attr('href')) {
+            if (e.type === 'touchend' && !$el.data('element_swiped') && $el.attr('href')) {
                 window.location = $el.attr('href');
             }
 

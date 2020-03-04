@@ -1,4 +1,4 @@
-var $ = window.jQuery = require('jquery');
+const $ = window.jQuery = require('jquery');
 
 jet = {
     jQuery: $

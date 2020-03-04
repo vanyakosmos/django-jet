@@ -1,19 +1,11 @@
 require('./../utils/jquery-slidefade');
 
-var $ = require('jquery');
-var t = require('../utils/translate');
+const $ = require('jquery');
+const t = require('../utils/translate');
 
-require('jquery-ui/ui/core');
-require('jquery-ui/ui/widget');
-require('jquery-ui/ui/mouse');
-require('jquery-ui/ui/draggable');
-require('jquery-ui/ui/droppable');
-require('jquery-ui/ui/sortable');
-require('jquery-ui/ui/resizable');
-require('jquery-ui/ui/button');
-require('jquery-ui/ui/dialog');
+require('jquery-ui-bundle/jquery-ui.min');
 
-var Dashboard = function($dashboard) {
+const Dashboard = function ($dashboard) {
     this.$dashboard = $dashboard;
 };
 
@@ -24,11 +16,11 @@ Dashboard.prototype = {
             $dashboard.find('.dashboard-tools').toggleClass('visible');
         });
 
-        var $form = $dashboard.find('#add-dashboard-module-form');
+        const $form = $dashboard.find('#add-dashboard-module-form');
 
         $form.find('.add-dashboard-link').on('click', function (e) {
-            var $typeInput = $form.find('[name="type"]');
-            var type = $form.find('[name="module"] option:selected').data('type');
+            const $typeInput = $form.find('[name="type"]');
+            const type = $form.find('[name="module"] option:selected').data('type');
 
             if (type) {
                 $typeInput.val(type);
@@ -52,9 +44,9 @@ Dashboard.prototype = {
         });
 
         $dashboard.find('.reset-dashboard-link').on('click', function(e) {
-            var buttons = {};
-            var resetDashboard = function () {
-                var $form = $dashboard.find('#reset-dashboard-form');
+            const buttons = {};
+            const resetDashboard = function () {
+                const $form = $dashboard.find('#reset-dashboard-form');
 
                 $.ajax({
                     url: $form.attr('action'),
@@ -90,17 +82,17 @@ Dashboard.prototype = {
         });
     },
     updateDashboardModules: function($dashboard) {
-        var $form = $dashboard.find('#update-dashboard-modules-form');
-        var modules = [];
+        const $form = $dashboard.find('#update-dashboard-modules-form');
+        const modules = [];
 
         $dashboard.find('.dashboard-column').each(function () {
-            var $column = $(this);
-            var column = $column.closest('.dashboard-column-wrapper').index();
+            const $column = $(this);
+            const column = $column.closest('.dashboard-column-wrapper').index();
 
             $column.find('.dashboard-item').each(function () {
-                var $item = $(this);
-                var order = $item.index();
-                var id = $item.data('module-id');
+                const $item = $(this);
+                const order = $item.index();
+                const id = $item.data('module-id');
 
                 modules.push({
                     id: id,
@@ -120,7 +112,7 @@ Dashboard.prototype = {
         });
     },
     initModulesDragAndDrop: function($dashboard) {
-        var self = this;
+        const self = this;
 
         $dashboard.find('.dashboard-column').droppable({
             activeClass: 'active',
@@ -141,19 +133,19 @@ Dashboard.prototype = {
         });
     },
     initCollapsibleModules: function($dashboard) {
-        var $form = $dashboard.find('#update-dashboard-module-collapse-form');
+        const $form = $dashboard.find('#update-dashboard-module-collapse-form');
 
         $dashboard.find('.dashboard-item.collapsible').each(function () {
-            var $item = $(this);
-            var $link = $item.find('.dashboard-item-collapse');
-            var $collapsible = $item.find('.dashboard-item-content');
-            var moduleId = $item.data('module-id');
+            const $item = $(this);
+            const $link = $item.find('.dashboard-item-collapse');
+            const $collapsible = $item.find('.dashboard-item-content');
+            const moduleId = $item.data('module-id');
 
             $link.on('click', function (e) {
                 e.preventDefault();
 
                 $collapsible.slideFadeToggle(200, 'swing', function () {
-                    var collapsed = $collapsible.is(':visible') == false;
+                    const collapsed = $collapsible.is(':visible') === false;
 
                     if (collapsed) {
                         $item.addClass('collapsed')
@@ -175,19 +167,19 @@ Dashboard.prototype = {
         });
     },
     initDeletableModules: function($dashboard) {
-        var $form = $dashboard.find('#remove-dashboard-module-form');
+        const $form = $dashboard.find('#remove-dashboard-module-form');
 
         $dashboard.find('.dashboard-item.deletable').each(function () {
-            var $item = $(this);
-            var $link = $item.find('.dashboard-item-remove');
-            var moduleId = $item.data('module-id');
+            const $item = $(this);
+            const $link = $item.find('.dashboard-item-remove');
+            const moduleId = $item.data('module-id');
 
             $link.on('click', function (e) {
                 e.preventDefault();
 
-                var buttons = {};
+                const buttons = {};
 
-                var deleteModule = function () {
+                const deleteModule = function () {
                     $item.fadeOut(200, 'swing', function () {
                         $form.find('[name="id"]').val(moduleId);
 
@@ -219,9 +211,9 @@ Dashboard.prototype = {
     },
     initAjaxModules: function($dashboard) {
         $dashboard.find('.dashboard-item.ajax').each(function () {
-            var $item = $(this);
-            var $content = $item.find('.dashboard-item-content');
-            var url = $item.data('ajax-url');
+            const $item = $(this);
+            const $content = $item.find('.dashboard-item-content');
+            const url = $item.data('ajax-url');
 
             $.ajax({
                 url: url,
@@ -232,9 +224,9 @@ Dashboard.prototype = {
                         return;
                     }
 
-                    var oldHeight = $content.height();
+                    const oldHeight = $content.height();
                     $content.html(result.html);
-                    var newHeight = $content.height();
+                    const newHeight = $content.height();
 
                     $content.height(oldHeight);
                     $content.animate({
@@ -255,15 +247,15 @@ Dashboard.prototype = {
         });
     },
     updateModuleChildrenFormsetFormIndex: function($form, index) {
-        var prefix = "children";
-        var id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
-        var replacement = prefix + "-" + index;
+        const prefix = "children";
+        const id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
+        const replacement = prefix + "-" + index;
 
         $form.find("fieldset.module *").each(function() {
-            var $el = $(this);
+            const $el = $(this);
 
             $.each(['for', 'id', 'name'], function() {
-                var attr = this;
+                const attr = this;
 
                 if ($el.attr(attr)) {
                     $el.attr(attr, $el.attr(attr).replace(id_regex, replacement));
@@ -272,16 +264,16 @@ Dashboard.prototype = {
         });
     },
     updateModuleChildrenFormsetFormsIndexes: function($inline) {
-        var self = this;
-        var from = parseInt($inline.find('.inline-related.has_original').length);
+        const self = this;
+        const from = parseInt($inline.find('.inline-related.has_original').length);
 
         $inline.find('.inline-related.last-related').each(function(i) {
             self.updateModuleChildrenFormsetFormIndex($(this), from + i);
         });
     },
     updateModuleChildrenFormsetTotalForms: function($inline) {
-        var $totalFormsInput = $inline.find('[name="children-TOTAL_FORMS"]');
-        var totalForms = parseInt($inline.find('.inline-related').length);
+        const $totalFormsInput = $inline.find('[name="children-TOTAL_FORMS"]');
+        const totalForms = parseInt($inline.find('.inline-related').length);
 
         $totalFormsInput.val(totalForms);
     },
@@ -290,14 +282,14 @@ Dashboard.prototype = {
             return;
         }
 
-        var self = this;
-        var $inline = $dashboard.find('.inline-group');
+        const self = this;
+        const $inline = $dashboard.find('.inline-group');
 
         $inline.find('.add-row a').on('click', function(e) {
             e.preventDefault();
 
-            var $empty = $inline.find('.inline-related.empty-form');
-            var $clone = $empty
+            const $empty = $inline.find('.inline-related.empty-form');
+            const $clone = $empty
                 .clone(true)
                 .removeClass('empty-form')
                 .insertBefore($empty);
@@ -319,7 +311,7 @@ Dashboard.prototype = {
         });
     },
     run: function() {
-        var $dashboard = this.$dashboard;
+        const $dashboard = this.$dashboard;
 
         try {
             this.initTools($dashboard);

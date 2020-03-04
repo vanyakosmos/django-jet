@@ -1,6 +1,6 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var CompactInline = function($inline) {
+const CompactInline = function ($inline) {
     this.$inline = $inline;
     this.prefix = $inline.data('inline-prefix');
     this.verboseName = $inline.data('inline-verbose-name');
@@ -9,29 +9,29 @@ var CompactInline = function($inline) {
 
 CompactInline.prototype = {
     updateLabels: function($inline) {
-        var self = this;
-        var $navigationItems = $inline.find('.inline-navigation-item');
+        const self = this;
+        const $navigationItems = $inline.find('.inline-navigation-item');
 
         $inline.find('.inline-related').each(function(i) {
-            var $inlineItem = $(this);
-            var $label = $inlineItem.find('.inline_label');
-            var label = $label.html().replace(/(#\d+)/g, "#" + (i + 1));
-            var $navigationItem = $navigationItems.eq(i);
-            var navigationLabel = $inlineItem.hasClass('has_original') ? label : self.verboseName + ' ' + label;
+            const $inlineItem = $(this);
+            const $label = $inlineItem.find('.inline_label');
+            const label = $label.html().replace(/(#\d+)/g, "#" + (i + 1));
+            const $navigationItem = $navigationItems.eq(i);
+            const navigationLabel = $inlineItem.hasClass('has_original') ? label : self.verboseName + ' ' + label;
 
             $label.html(label);
             $navigationItem.html(navigationLabel);
         });
     },
     updateFormIndex: function($form, index) {
-        var id_regex = new RegExp('(' + this.prefix + '-(\\d+|__prefix__))');
-        var replacement = this.prefix + "-" + index;
+        const id_regex = new RegExp('(' + this.prefix + '-(\\d+|__prefix__))');
+        const replacement = this.prefix + "-" + index;
 
         $form.find('*').each(function() {
-            var $el = $(this);
+            const $el = $(this);
 
             $.each(['for', 'id', 'name'], function() {
-                var attr = this;
+                const attr = this;
 
                 if ($el.attr(attr)) {
                     $el.attr(attr, $el.attr(attr).replace(id_regex, replacement));
@@ -44,27 +44,27 @@ CompactInline.prototype = {
         }
     },
     updateFormsIndexes: function($inline) {
-        var self = this;
-        var $navigationItems = $inline.find('.inline-navigation-item');
+        const self = this;
+        const $navigationItems = $inline.find('.inline-navigation-item');
 
         $inline.find('.inline-related').each(function(i) {
-            var $inlineItem = $(this);
+            const $inlineItem = $(this);
 
             self.updateFormIndex($inlineItem, i);
             $navigationItems.eq(i).attr('data-inline-related-id', $inlineItem.attr('id'));
         });
     },
     updateTotalForms: function($inline) {
-        var $totalFormsInput = $inline.find('[name="' + this.prefix + '-TOTAL_FORMS"]');
-        var $maxFormsInput = $inline.find('[name="' + this.prefix + '-MAX_NUM_FORMS"]');
-        var totalForms = parseInt($inline.find('.inline-related').length);
-        var maxForms = $maxFormsInput.val() ? parseInt($maxFormsInput.val()) : Infinity;
+        const $totalFormsInput = $inline.find('[name="' + this.prefix + '-TOTAL_FORMS"]');
+        const $maxFormsInput = $inline.find('[name="' + this.prefix + '-MAX_NUM_FORMS"]');
+        const totalForms = parseInt($inline.find('.inline-related').length);
+        const maxForms = $maxFormsInput.val() ? parseInt($maxFormsInput.val()) : Infinity;
 
         $totalFormsInput.val(totalForms);
         $inline.find('.add-row').toggle(maxForms >= totalForms);
     },
     addNavigationItem: function($inline, $inlineItem) {
-        var $empty = $inline.find('.inline-navigation-item.empty');
+        const $empty = $inline.find('.inline-navigation-item.empty');
 
         return $empty
             .clone()
@@ -87,9 +87,9 @@ CompactInline.prototype = {
         $inline.find('.inline-navigation-item[data-inline-related-id="' + $item.attr('id') + '"]').remove();
     },
     openFirstNavigationItem: function($inline) {
-        var $item = $inline.find('.inline-navigation-item:not(.empty)').first();
+        const $item = $inline.find('.inline-navigation-item:not(.empty)').first();
 
-        if ($item == undefined) {
+        if ($item === undefined) {
             return;
         }
 
@@ -102,28 +102,28 @@ CompactInline.prototype = {
             .append('<span><a class="inline-deletelink" href="#">' + this.deleteText + "</a></span>");
     },
     scrollNavigationToTop: function($inline) {
-        var $navigationItemsContainer = $inline.find('.inline-navigation-content');
+        const $navigationItemsContainer = $inline.find('.inline-navigation-content');
 
         $navigationItemsContainer.stop().animate({
             scrollTop: 0
         });
     },
     scrollNavigationToBottom: function($inline) {
-        var $navigationItemsContainer = $inline.find('.inline-navigation-content');
+        const $navigationItemsContainer = $inline.find('.inline-navigation-content');
 
         $navigationItemsContainer.stop().animate({
             scrollTop: $navigationItemsContainer.prop('scrollHeight')
         });
     },
     initAdding: function($inline) {
-        var self = this;
+        const self = this;
 
         $inline.find('.add-row a').on('click', function (e) {
             e.preventDefault();
 
-            var $empty = $inline.find('.inline-related.empty-form');
-            var cloneIndex = parseInt($inline.find('.inline-related').length) - 1;
-            var $clone = $empty
+            const $empty = $inline.find('.inline-related.empty-form');
+            const cloneIndex = parseInt($inline.find('.inline-related').length) - 1;
+            const $clone = $empty
                 .clone(true)
                 .removeClass('empty-form')
                 .insertBefore($empty);
@@ -132,7 +132,7 @@ CompactInline.prototype = {
             self.updateFormIndex($clone, cloneIndex);
             self.updateFormIndex($empty, cloneIndex + 1);
 
-            var navigationItem = self.addNavigationItem($inline, $clone);
+            const navigationItem = self.addNavigationItem($inline, $clone);
 
             self.updateLabels($inline);
             self.openNavigationItem($inline, navigationItem);
@@ -141,12 +141,12 @@ CompactInline.prototype = {
         });
     },
     initDeletion: function($inline) {
-        var self = this;
+        const self = this;
 
         $inline.on('click', '.inline-deletelink', function(e) {
             e.preventDefault();
 
-            var $inlineItem = $(this).closest('.inline-related');
+            const $inlineItem = $(this).closest('.inline-related');
 
             self.removeItem($inline, $inlineItem);
             self.updateFormsIndexes($inline);
@@ -156,7 +156,7 @@ CompactInline.prototype = {
         });
 
         $inline.find('.inline-related').each(function() {
-            var $inlineItem = $(this);
+            const $inlineItem = $(this);
 
             $inlineItem.find('.delete input').on('change', function() {
                 $inline
@@ -166,7 +166,7 @@ CompactInline.prototype = {
         });
     },
     initNavigation: function($inline) {
-        var self = this;
+        const self = this;
 
         $inline.on('click', '.inline-navigation-item', function(e) {
             e.preventDefault();
@@ -177,7 +177,7 @@ CompactInline.prototype = {
         self.openFirstNavigationItem($inline);
     },
     run: function() {
-        var $inline = this.$inline;
+        const $inline = this.$inline;
 
         try {
             this.initAdding($inline);

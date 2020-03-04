@@ -1,31 +1,30 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-require('jquery-ui/ui/core');
-require('jquery-ui/ui/datepicker');
-
+require('jquery-ui-bundle/jquery-ui.min');
 require('timepicker');
 
-var DateTimeWidgets = function() { };
+const DateTimeWidgets = function () {
+};
 
 DateTimeWidgets.prototype = {
     removeInputTextNode: function($input) {
-        if ($input.length == 0) {
+        if ($input.length === 0) {
             return;
         }
 
-        var node = $input.get(0).previousSibling;
+        const node = $input.get(0).previousSibling;
 
-        if (node.nodeType == 3) {
+        if (node.nodeType === 3) {
             $(node).remove();
         }
     },
     updateDatetimeLayout: function() {
-        var self = this;
+        const self = this;
 
         $('.form-row .datetime').each(function () {
-            var $dateTime = $(this);
-            var $dateField = $dateTime.find('.vDateField');
-            var $timeField = $dateTime.find('.vTimeField');
+            const $dateTime = $(this);
+            const $dateField = $dateTime.find('.vDateField');
+            const $timeField = $dateTime.find('.vTimeField');
 
             self.removeInputTextNode($dateField);
             self.removeInputTextNode($timeField);
@@ -34,8 +33,8 @@ DateTimeWidgets.prototype = {
         });
 
         $('.form-row .vDateField').each(function () {
-            var $dateField = $(this);
-            var $dateButton = $('<span>').addClass('icon-calendar');
+            const $dateField = $(this);
+            const $dateButton = $('<span>').addClass('icon-calendar');
             $('<a>')
                 .attr('href', '#')
                 .addClass('vDateField-link')
@@ -44,8 +43,8 @@ DateTimeWidgets.prototype = {
         });
 
         $('.form-row .vTimeField').each(function () {
-            var $timeField = $(this);
-            var $timeButton = $('<span>').addClass('icon-clock');
+            const $timeField = $(this);
+            const $timeButton = $('<span>').addClass('icon-clock');
             $('<a>')
                 .attr('href', '#')
                 .addClass('vTimeField-link')
@@ -62,11 +61,11 @@ DateTimeWidgets.prototype = {
     initDateWidgets: function($container) {
         $container = $container || $(document);
 
-        var self = this;
+        const self = this;
 
         $container.find('.form-row .vDateField').each(function () {
-            var $dateField = $(this);
-            var $dateLink = $dateField.next('.vDateField-link');
+            const $dateField = $(this);
+            const $dateLink = $dateField.next('.vDateField-link');
 
             $dateField.datepicker({
                 dateFormat: self.djangoDateTimeFormatToJs(DATE_FORMAT),
@@ -86,7 +85,7 @@ DateTimeWidgets.prototype = {
             });
         });
 
-        var old_goToToday = $.datepicker._gotoToday;
+        const old_goToToday = $.datepicker._gotoToday;
         $.datepicker._gotoToday = function(id) {
             old_goToToday.call(this,id);
             this._selectDate(id);
@@ -96,8 +95,8 @@ DateTimeWidgets.prototype = {
         $container = $container || $(document);
 
         $container.find('.form-row .vTimeField').each(function () {
-            var $timeField = $(this);
-            var $timeLink = $timeField.next('.vTimeField-link');
+            const $timeField = $(this);
+            const $timeLink = $timeField.next('.vTimeField-link');
 
             $timeField.timepicker({
                 showPeriodLabels: false,
@@ -122,7 +121,7 @@ DateTimeWidgets.prototype = {
             this.initDateWidgets();
             this.initTimeWidgets();
 
-            var self = this;
+            const self = this;
 
             $('.inline-group').on('inline-group-row:added', function(e, $inlineItem) {
                 $inlineItem.find('.hasDatepicker').removeClass('hasDatepicker');

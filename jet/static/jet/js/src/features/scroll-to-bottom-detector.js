@@ -1,11 +1,12 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var ScrollToBottomDetector = function() { };
+const ScrollToBottomDetector = function () {
+};
 
 ScrollToBottomDetector.prototype = {
     prevScrollTop: null,
     initDetector: function() {
-        var self = this;
+        const self = this;
 
         $(window).on('scroll', function() {
             if (self.prevScrollTop != null && $(window).scrollTop() > self.prevScrollTop && $(window).scrollTop() > 60) {

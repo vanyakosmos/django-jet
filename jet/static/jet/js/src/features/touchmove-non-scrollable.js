@@ -1,12 +1,13 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var TouchMoveNonScrollable = function() { };
+const TouchMoveNonScrollable = function () {
+};
 
 TouchMoveNonScrollable.prototype = {
     initTouchMoveHandler: function() {
         $(document).on('touchmove', function(e) {
-            var allowed = true;
-            var $node = $(e.target);
+            let allowed = true;
+            let $node = $(e.target);
 
             while ($node.length > 0) {
                 if ($node.hasClass('non-scrollable')) {

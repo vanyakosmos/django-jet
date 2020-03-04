@@ -1,31 +1,31 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var ChangeList = function($changelist) {
+const ChangeList = function ($changelist) {
     this.$changelist = $changelist;
 };
 
 ChangeList.prototype = {
     updateFixedHeaderVisibility: function($fixedTable, $originalHeader) {
-        var show = $(window).scrollTop() > $originalHeader.offset().top;
+        const show = $(window).scrollTop() > $originalHeader.offset().top;
         $fixedTable.closest('table').toggle(show);
     },
     updateFixedHeaderWidth: function($fixedHeader, $originalHeader) {
-        var $originalColumns = $originalHeader.find('th');
-        var $columns = $fixedHeader.find('th');
+        const $originalColumns = $originalHeader.find('th');
+        const $columns = $fixedHeader.find('th');
 
         $originalColumns.each(function(i) {
             $columns.eq(i).css('width', $(this).width());
         });
     },
     initFixedHeader: function($changelist) {
-        var $originalHeader = $changelist.find('#result_list thead');
+        const $originalHeader = $changelist.find('#result_list thead');
 
-        if ($originalHeader.length == 0) {
+        if ($originalHeader.length === 0) {
             return;
         }
 
-        var $fixedHeader = $originalHeader.clone();
-        var $fixedTable = $('<table>').addClass('helper').append($fixedHeader);
+        const $fixedHeader = $originalHeader.clone();
+        const $fixedTable = $('<table>').addClass('helper').append($fixedHeader);
 
         $fixedTable.find('.action-checkbox-column').empty();
         $fixedTable.appendTo(document.body);
@@ -38,7 +38,7 @@ ChangeList.prototype = {
     updateFixedFooter: function($results, $footer) {
         if ($(window).scrollTop() + $(window).height() < $results.offset().top + $results.outerHeight(false) + $footer.innerHeight()) {
             if (!$footer.hasClass('fixed')) {
-                var previousScrollTop = $(window).scrollTop();
+                const previousScrollTop = $(window).scrollTop();
 
                 $footer.addClass('fixed');
                 $results.css('margin-bottom', ($footer.innerHeight()) + 'px');
@@ -53,10 +53,10 @@ ChangeList.prototype = {
         }
     },
     initFixedFooter: function($changelist) {
-        var $footer = $changelist.find('.changelist-footer');
-        var $results = $footer.siblings('.results');
+        const $footer = $changelist.find('.changelist-footer');
+        const $results = $footer.siblings('.results');
 
-        if ($footer.length == 0 || $results.length == 0) {
+        if ($footer.length === 0 || $results.length === 0) {
             return;
         }
 
@@ -68,13 +68,13 @@ ChangeList.prototype = {
     initHeaderSortableSelection: function() {
         $('table thead .sortable').on('click', function(e) {
 
-            if (e.target != this) {
+            if (e.target !== this) {
                 return;
             }
 
-            var link = $(this).find('.text a').get(0);
+            const link = $(this).find('.text a').get(0);
 
-            if (link != undefined) {
+            if (link !== undefined) {
                 link.click();
             }
         });
@@ -82,7 +82,7 @@ ChangeList.prototype = {
     initRowSelection: function($changelist) {
         $changelist.find('#result_list tbody th, #result_list tbody td').on('click', function(e) {
             // Fix selection on clicking elements inside row (e.x. links)
-            if (e.target != this) {
+            if (e.target !== this) {
                 return;
             }
 
@@ -90,7 +90,7 @@ ChangeList.prototype = {
         });
     },
     run: function() {
-        var $changelist = this.$changelist;
+        const $changelist = this.$changelist;
 
         try {
             this.initFixedHeader($changelist);

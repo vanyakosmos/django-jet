@@ -1,18 +1,18 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
-var TabularInlineUpdater = function($inline) {
+const TabularInlineUpdater = function ($inline) {
     this.$inline = $inline;
 };
 
 TabularInlineUpdater.prototype = {
     updateOriginalCell: function() {
         this.$inline.find('tr').each(function() {
-            var $container = $(this).find('td.original p');
+            const $container = $(this).find('td.original p');
 
             $container.contents().each(function() {
-                var $node = $(this);
+                const $node = $(this);
 
-                if ($node.get(0).nodeType == 3) {
+                if ($node.get(0).nodeType === 3) {
                     $node.remove();
                     return;
                 }
@@ -25,7 +25,7 @@ TabularInlineUpdater.prototype = {
 
             $container.find('a').text('');
 
-            if ($container.children().length == 0) {
+            if ($container.children().length === 0) {
                 $container.parent().addClass('empty');
             }
         });

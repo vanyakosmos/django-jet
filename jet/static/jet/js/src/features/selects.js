@@ -1,45 +1,46 @@
 require('select2');
 
-var $ = require('jquery');
-var t = require('../utils/translate');
+const $ = require('jquery');
+const t = require('../utils/translate');
 
-var Select2 = function() { };
+const Select2 = function () {
+};
 
 Select2.prototype = {
-    updateAttachBody: function(AttachBody) {
+    updateAttachBody: function (AttachBody) {
         AttachBody.prototype._positionDropdown = function () {
-            var $window = $(window);
+            const $window = $(window);
 
-            var isCurrentlyAbove = this.$dropdown.hasClass('select2-dropdown--above');
-            var isCurrentlyBelow = this.$dropdown.hasClass('select2-dropdown--below');
+            const isCurrentlyAbove = this.$dropdown.hasClass('select2-dropdown--above');
+            const isCurrentlyBelow = this.$dropdown.hasClass('select2-dropdown--below');
 
-            var newDirection = null;
+            let newDirection = null;
 
-            var position = this.$container.position();
-            var offset = this.$container.offset();
+            const position = this.$container.position();
+            const offset = this.$container.offset();
 
             offset.bottom = offset.top + this.$container.outerHeight(false);
 
-            var container = {
+            const container = {
                 height: this.$container.outerHeight(false)
             };
 
             container.top = offset.top;
             container.bottom = offset.top + container.height;
 
-            var dropdown = {
+            const dropdown = {
                 height: this.$dropdown.outerHeight(false)
             };
 
-            var viewport = {
+            const viewport = {
                 top: $window.scrollTop(),
                 bottom: $window.scrollTop() + $window.height()
             };
 
-            var enoughRoomAbove = viewport.top < (offset.top - dropdown.height);
-            var enoughRoomBelow = viewport.bottom > (offset.bottom + dropdown.height);
+            const enoughRoomAbove = viewport.top < (offset.top - dropdown.height);
+            const enoughRoomBelow = viewport.bottom > (offset.bottom + dropdown.height);
 
-            var css = {
+            const css = {
                 left: offset.left,
                 top: container.bottom
             };
@@ -54,7 +55,7 @@ Select2.prototype = {
                 newDirection = 'below';
             }
 
-            if (newDirection == 'above' ||
+            if (newDirection === 'above' ||
                 (isCurrentlyAbove && newDirection !== 'below')) {
                 css.top = container.top - dropdown.height;
             }
@@ -68,11 +69,11 @@ Select2.prototype = {
                     .addClass('select2-container--' + newDirection);
 
                 //hack
-                var $search = this.$dropdown.find('.select2-search');
+                const $search = this.$dropdown.find('.select2-search');
 
-                if (newDirection == 'above' && $search.is(':first-child')) {
+                if (newDirection === 'above' && $search.is(':first-child')) {
                     $search.detach().appendTo(this.$dropdown);
-                } else if (newDirection == 'below' && $search.is(':last-child')) {
+                } else if (newDirection === 'below' && $search.is(':last-child')) {
                     $search.detach().prependTo(this.$dropdown);
                 }
             }
@@ -81,9 +82,9 @@ Select2.prototype = {
         };
 
         AttachBody.prototype.render = function (decorated) {
-            var $container = $('<span></span>');
+            const $container = $('<span></span>');
 
-            var $dropdown = decorated.call(this);
+            const $dropdown = decorated.call(this);
             $container.append($dropdown);
 
             this.$dropdownContainer = $container;
@@ -98,9 +99,9 @@ Select2.prototype = {
             return $container;
         };
     },
-    updateDropdownAdapter: function(DropdownAdapter) {
+    updateDropdownAdapter: function (DropdownAdapter) {
         DropdownAdapter.prototype.render = function () {
-            var buttons = '';
+            let buttons = '';
 
             if (this.options.get('multiple')) {
                 buttons =
@@ -114,18 +115,18 @@ Select2.prototype = {
                     '</div>';
             }
 
-            var $dropdown = $(
+            const $dropdown = $(
                 '<span class="select2-dropdown">' +
                 buttons +
                 '<span class="select2-results"></span>' +
                 '</span>'
             );
 
-            var $element = this.$element;
+            const $element = this.$element;
 
             $dropdown.find('.select2-buttons-button-select-all').on('click', function (e) {
                 e.preventDefault();
-                var selected = [];
+                const selected = [];
                 $element.find('option').each(function () {
                     selected.push($(this).val());
                 });
@@ -144,19 +145,19 @@ Select2.prototype = {
             return $dropdown;
         };
     },
-    initSelect: function($select, DropdownAdapter) {
-        var settings = {
+    initSelect: function ($select, DropdownAdapter) {
+        const settings = {
             theme: 'jet',
             dropdownAdapter: DropdownAdapter,
             width: 'auto'
         };
 
         if ($select.hasClass('ajax')) {
-            var contentTypeId = $select.data('content-type-id');
-            var appLabel = $select.data('app-label');
-            var model = $select.data('model');
-            var objectId = $select.data('object-id');
-            var pageSize = 100;
+            const contentTypeId = $select.data('content-type-id');
+            const appLabel = $select.data('app-label');
+            const model = $select.data('model');
+            const objectId = $select.data('object-id');
+            const pageSize = 100;
 
             settings['ajax'] = {
                 dataType: 'json',
@@ -177,32 +178,32 @@ Select2.prototype = {
                     }
 
                     params.page = params.page || 1;
-                    var more = (params.page * pageSize) < data.total;
+                    const more = (params.page * pageSize) < data.total;
 
                     return {
-                      results: data.items,
-                      pagination: {
-                        more: more
-                      }
+                        results: data.items,
+                        pagination: {
+                            more: more
+                        }
                     };
                 }
             };
         }
 
-        $select.on('change', function(e) {
+        $select.on('change', function (e) {
             django.jQuery($select.get(0)).trigger(e);
         });
 
         $select.select2(settings);
     },
-    initSelect2: function() {
-        var self = this;
-        var AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
-        var DropdownAdapter = $.fn.select2.amd.require('select2/dropdown');
-        var Utils = $.fn.select2.amd.require('select2/utils');
-        var DropdownSearch = $.fn.select2.amd.require('select2/dropdown/search');
-        var MinimumResultsForSearch = $.fn.select2.amd.require('select2/dropdown/minimumResultsForSearch');
-        var closeOnSelect = $.fn.select2.amd.require('select2/dropdown/closeOnSelect');
+    initSelect2: function () {
+        const self = this;
+        const AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
+        let DropdownAdapter = $.fn.select2.amd.require('select2/dropdown');
+        const Utils = $.fn.select2.amd.require('select2/utils');
+        const DropdownSearch = $.fn.select2.amd.require('select2/dropdown/search');
+        const MinimumResultsForSearch = $.fn.select2.amd.require('select2/dropdown/minimumResultsForSearch');
+        const closeOnSelect = $.fn.select2.amd.require('select2/dropdown/closeOnSelect');
 
         this.updateAttachBody(AttachBody);
         this.updateDropdownAdapter(DropdownAdapter);
@@ -212,8 +213,8 @@ Select2.prototype = {
         DropdownAdapter = Utils.Decorate(DropdownAdapter, MinimumResultsForSearch);
         DropdownAdapter = Utils.Decorate(DropdownAdapter, closeOnSelect);
 
-        $(document).on('select:init', 'select', function() {
-            var $select = $(this);
+        $(document).on('select:init', 'select', function () {
+            const $select = $(this);
 
             if ($select.parents('.empty-form').length > 0) {
                 return;
@@ -224,11 +225,11 @@ Select2.prototype = {
 
         $('select').trigger('select:init');
 
-        $('.inline-group').on('inline-group-row:added', function(e, $inlineItem) {
+        $('.inline-group').on('inline-group-row:added', function (e, $inlineItem) {
             $inlineItem.find('select').trigger('select:init');
         });
     },
-    run: function() {
+    run: function () {
         try {
             this.initSelect2();
         } catch (e) {
@@ -237,6 +238,6 @@ Select2.prototype = {
     }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     new Select2().run();
 });

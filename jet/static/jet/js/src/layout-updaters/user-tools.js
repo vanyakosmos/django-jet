@@ -1,16 +1,16 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
 require('browsernizr/test/touchevents');
 require('browsernizr');
 
-var UserToolsUpdater = function($usertools) {
+const UserToolsUpdater = function ($usertools) {
     this.$usertools = $usertools;
 };
 
 UserToolsUpdater.prototype = {
     updateUserTools: function($usertools) {
-        var $list = $('<ul>').addClass('sidebar-dependent');
-        var user = $usertools.find('strong').first().text();
+        const $list = $('<ul>').addClass('sidebar-dependent');
+        const user = $usertools.find('strong').first().text();
 
         $('<li>')
             .addClass('user-tools-welcome-msg')
@@ -22,7 +22,7 @@ UserToolsUpdater.prototype = {
             });
 
         $usertools.find('a').each(function() {
-            var $link = $(this);
+            const $link = $(this);
             $('<li>').addClass('user-tools-link').html($link).appendTo($list);
         });
 
