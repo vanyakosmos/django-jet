@@ -1,4 +1,3 @@
-# encoding: utf-8
 import datetime
 import json
 from urllib import request
@@ -6,7 +5,6 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 
 from django import forms
-from django.conf import settings
 from django.forms import Widget
 from django.urls import reverse
 from django.utils import formats
@@ -16,11 +14,8 @@ from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
-from jet.dashboard.modules import DashboardModule
-
-
-JET_MODULE_YANDEX_METRIKA_CLIENT_ID = getattr(settings, 'JET_MODULE_YANDEX_METRIKA_CLIENT_ID', '')
-JET_MODULE_YANDEX_METRIKA_CLIENT_SECRET = getattr(settings, 'JET_MODULE_YANDEX_METRIKA_CLIENT_SECRET', '')
+from jet.dashboard.settings import JET_MODULE_YANDEX_METRIKA_CLIENT_ID, JET_MODULE_YANDEX_METRIKA_CLIENT_SECRET
+from ..base import DashboardModule
 
 
 class YandexMetrikaClient:
@@ -295,7 +290,7 @@ class YandexMetrikaVisitorsChart(YandexMetrikaBase):
     settings_form = YandexMetrikaChartSettingsForm
 
     class Media:
-        js = ('jet.dashboard/vendor/chart.js/Chart.min.js', 'jet.dashboard/dashboard_modules/yandex_metrika.js')
+        js = ('jet.dashboard/vendor/chart.js/Chart.min.js', 'jet.dashboard/modules/yandex_metrika.js')
 
     def __init__(self, title=None, period=None, show=None, group=None, **kwargs):
         kwargs.update({'period': period, 'show': show, 'group': group})

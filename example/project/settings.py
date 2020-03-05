@@ -23,7 +23,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'jet.dashboard',
+    'jet.dashboard.apps.DashboardApp',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -150,5 +150,5 @@ JET_THEMES = [
 JET_SIDE_MENU_COMPACT = True
 # JET_SIDE_MENU_ITEMS = []
 JET_CHANGE_FORM_SIBLING_LINKS = True
-JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
+JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.MinimalIndexDashboard'
 JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'

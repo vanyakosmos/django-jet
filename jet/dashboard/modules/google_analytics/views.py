@@ -1,14 +1,13 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.urls import re_path, reverse
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from httplib2 import ServerNotFoundError
 from oauth2client.client import FlowExchangeError
 
-from jet.dashboard import dashboard
-from jet.dashboard.dashboard_modules.google_analytics import GoogleAnalyticsClient, ModuleCredentialStorage
 from jet.dashboard.models import UserDashboardModule
+from .module import GoogleAnalyticsClient, ModuleCredentialStorage
 
 
 def google_analytics_grant_view(request, pk):
@@ -46,10 +45,3 @@ def google_analytics_callback_view(request):
         return HttpResponse(_('Module not found'))
 
     return redirect(reverse('jet-dashboard:update_module', kwargs={'pk': module.pk}))
-
-
-dashboard.urls.register_urls([
-    re_path(r'^google-analytics/grant/(?P<pk>\d+)/$', google_analytics_grant_view, name='google-analytics-grant'),
-    re_path(r'^google-analytics/revoke/(?P<pk>\d+)/$', google_analytics_revoke_view, name='google-analytics-revoke'),
-    re_path(r'^google-analytics/callback/', google_analytics_callback_view, name='google-analytics-callback'),
-])

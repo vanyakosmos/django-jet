@@ -1,8 +1,7 @@
-from django.urls import path, re_path
+from django.urls import include, path, re_path
 from django.views.i18n import JavaScriptCatalog
 
-from jet.dashboard import dashboard
-from jet.dashboard import views
+from jet.dashboard import settings, views
 
 
 app_name = 'dashboard'
@@ -51,4 +50,11 @@ urlpatterns = [
     ),
 ]
 
-urlpatterns += dashboard.urls.get_urls()
+if settings.JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE:
+    urlpatterns.append(path('', include('jet.dashboard.modules.google_analytics.urls')))
+
+if (
+    settings.JET_MODULE_YANDEX_METRIKA_CLIENT_ID and
+    settings.JET_MODULE_YANDEX_METRIKA_CLIENT_SECRET
+):
+    urlpatterns.append(path('', include('jet.dashboard.modules.yandex_metrika.urls')))

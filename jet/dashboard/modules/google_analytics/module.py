@@ -3,7 +3,6 @@ import json
 
 import httplib2
 from django import forms
-from django.conf import settings
 from django.forms import Widget
 from django.forms.utils import flatatt
 from django.urls import reverse
@@ -16,14 +15,8 @@ from django.utils.translation import gettext_lazy as _
 from googleapiclient.discovery import build
 from oauth2client.client import AccessTokenRefreshError, OAuth2Credentials, Storage, flow_from_clientsecrets
 
-from jet.dashboard.modules import DashboardModule
-
-
-JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = getattr(
-    settings,
-    'JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE',
-    ''
-)
+from jet.dashboard.settings import JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE
+from ..base import DashboardModule
 
 
 class ModuleCredentialStorage(Storage):
@@ -354,7 +347,7 @@ class GoogleAnalyticsVisitorsChart(GoogleAnalyticsBase):
     settings_form = GoogleAnalyticsChartSettingsForm
 
     class Media:
-        js = ('jet.dashboard/vendor/chart.js/Chart.min.js', 'jet.dashboard/dashboard_modules/google_analytics.js')
+        js = ('jet.dashboard/vendor/chart.js/Chart.min.js', 'jet.dashboard/modules/google_analytics.js')
 
     def __init__(self, title=None, period=None, show=None, group=None, **kwargs):
         kwargs.update({'period': period, 'show': show, 'group': group})

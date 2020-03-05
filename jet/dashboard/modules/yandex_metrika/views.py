@@ -1,12 +1,11 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.urls import re_path, reverse
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from jet.dashboard import dashboard
-from jet.dashboard.dashboard_modules.yandex_metrika import YandexMetrikaClient
 from jet.dashboard.models import UserDashboardModule
+from .module import YandexMetrikaClient
 
 
 def yandex_metrika_grant_view(request, pk):
@@ -43,22 +42,3 @@ def yandex_metrika_callback_view(request):
         return HttpResponse(_('Bad arguments'))
     except UserDashboardModule.DoesNotExist:
         return HttpResponse(_('Module not found'))
-
-
-dashboard.urls.register_urls([
-    re_path(
-        r'^yandex-metrika/grant/(?P<pk>\d+)/$',
-        yandex_metrika_grant_view,
-        name='yandex-metrika-grant'
-    ),
-    re_path(
-        r'^yandex-metrika/revoke/(?P<pk>\d+)/$',
-        yandex_metrika_revoke_view,
-        name='yandex-metrika-revoke'
-    ),
-    re_path(
-        r'^yandex-metrika/callback/$',
-        yandex_metrika_callback_view,
-        name='yandex-metrika-callback'
-    ),
-])

@@ -208,9 +208,6 @@ class DefaultIndexDashboard(Dashboard):
         self.children.append(modules.LinkList(
             _('Quick links'),
             layout='inline',
-            draggable=False,
-            deletable=False,
-            collapsible=False,
             children=[
                 [_('Return to site'), '/'],
                 [_('Change password'),
@@ -279,6 +276,49 @@ class DefaultIndexDashboard(Dashboard):
         ))
 
 
+class MinimalIndexDashboard(Dashboard):
+    columns = 3
+
+    def init_with_context(self, context):
+        self.available_children.append(modules.LinkList)
+        self.available_children.append(modules.Feed)
+        site_name = get_admin_site_name(context)
+
+        self.children.append(modules.LinkList(
+            _('Quick links'),
+            layout='inline',
+            children=[
+                [_('Return to site'), '/'],
+                [_('Change password'),
+                 reverse('%s:password_change' % site_name)],
+                [_('Log out'), reverse('%s:logout' % site_name)],
+            ],
+            column=0,
+            order=0
+        ))
+
+        self.children.append(modules.RecentActions(
+            _('Recent Actions'),
+            10,
+            column=0,
+            order=1
+        ))
+
+        self.children.append(modules.AppList(
+            _('Applications'),
+            exclude=('auth.*',),
+            column=1,
+            order=0
+        ))
+
+        self.children.append(modules.AppList(
+            _('Administration'),
+            models=('auth.*',),
+            column=2,
+            order=0
+        ))
+
+
 class DefaultAppIndexDashboard(AppIndexDashboard):
     def init_with_context(self, context):
         self.available_children.append(modules.LinkList)
@@ -294,19 +334,3 @@ class DefaultAppIndexDashboard(AppIndexDashboard):
             column=1,
             order=0
         ))
-
-
-class DashboardUrls(object):
-    _urls = []
-
-    def get_urls(self):
-        return self._urls
-
-    def register_url(self, url):
-        self._urls.append(url)
-
-    def register_urls(self, urls):
-        self._urls.extend(urls)
-
-
-urls = DashboardUrls()
