@@ -1,9 +1,11 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
-class DashboardApp(AppConfig):
+class JetDashboardConfig(AppConfig):
     name = 'jet.dashboard'
-    verbose_name = 'Jet Dashboard'
+    label = 'jet.dashboard'
+    verbose_name = _('Jet Dashboard')
 
     # noinspection PyUnresolvedReferences
     def ready(self):

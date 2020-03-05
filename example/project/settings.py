@@ -23,7 +23,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'jet.dashboard.apps.DashboardApp',
+    'jet.dashboard',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
