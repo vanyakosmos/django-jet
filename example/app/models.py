@@ -23,7 +23,7 @@ class Book(models.Model):
     @property
     def authors_list(self):
         authors = ', '.join(a.name for a in self.authors.all())
-        return authors or 'unknown'
+        return authors or '<unknown>'
 
     @staticmethod
     def autocomplete_search_fields():

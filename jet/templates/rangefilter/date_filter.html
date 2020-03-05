@@ -3,12 +3,12 @@
 <script>
     function datefilter_apply(event, qs_name, form_name){
         event.preventDefault();
-        var query_string = django.jQuery('input#'+qs_name).val();
-        var form_data = django.jQuery('#'+form_name).serialize();
+        const query_string = django.jQuery('input#' + qs_name).val();
+        const form_data = django.jQuery('#' + form_name).serialize();
         window.location = window.location.pathname + query_string + '&' + form_data;
     }
     function datefilter_reset(qs_name){
-        var query_string = django.jQuery('input#'+qs_name).val();
+        const query_string = django.jQuery('input#' + qs_name).val();
         window.location = window.location.pathname + query_string;
     }
 </script>

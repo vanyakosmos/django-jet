@@ -1,4 +1,3 @@
-# encoding: utf-8
 import datetime
 import json
 
@@ -6,6 +5,7 @@ import httplib2
 from django import forms
 from django.conf import settings
 from django.forms import Widget
+from django.forms.utils import flatatt
 from django.urls import reverse
 from django.utils import formats
 from django.utils.encoding import force_text
@@ -18,16 +18,6 @@ from oauth2client.client import AccessTokenRefreshError, OAuth2Credentials, Stor
 
 from jet.dashboard.modules import DashboardModule
 
-
-try:
-    from django.utils.encoding import force_unicode
-except ImportError:
-    from django.utils.encoding import force_text as force_unicode
-
-try:
-    from django.forms.utils import flatatt
-except ImportError:
-    from django.forms.util import flatatt
 
 JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = getattr(
     settings,
@@ -143,7 +133,7 @@ class GoogleAnalyticsClient:
 class CredentialWidget(Widget):
     module = None
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, rendered=None):
         if value and len(value) > 0:
             link = '<a href="%s">%s</a>' % (
                 reverse('jet-dashboard:google-analytics-revoke', kwargs={'pk': self.module.model.pk}),
@@ -159,7 +149,7 @@ class CredentialWidget(Widget):
             'type': 'hidden',
             'name': 'credential',
         })
-        attrs['value'] = force_unicode(value) if value else ''
+        attrs['value'] = force_text(value) if value else ''
 
         return format_html('%s<input{} />' % link, flatatt(attrs))
 

@@ -29,7 +29,8 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('authors',)
     inlines = (AuthorInline, ReviewInline)
     list_per_page = 5
-    readonly_fields = ('authors',)
+    readonly_fields = ('authors_list',)
+    exclude = ('authors',)
 
     def reviews(self, book: Book):
         return book.review_set.count()

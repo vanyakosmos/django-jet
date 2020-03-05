@@ -190,7 +190,7 @@ def jet_sibling_object(context, next):
         url += '?' + preserved_filters_plain
 
     return {
-        'label': str(sibling_object),
+        'label': smart_str(sibling_object),
         'url': url
     }
 
