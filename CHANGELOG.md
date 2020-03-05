@@ -1,8 +1,20 @@
-Changelog
-=========
+# Changelog
 
-1.0.8
------
+
+## Unpublished
+
+- setup poetry
+- fully migrate to django3 
+- update js dependencies
+- refactor dashboard modules
+- make sidebar customisable
+- fix issue with pagination
+- add app configs and extra checks
+- add example project
+
+
+## 1.0.8
+
 * PR-345: Django 2.1 compatability fix
 * PR-337: Fix get_model_queryset exception when model_admin is None
 * PR-309: Add French locale
@@ -12,15 +24,15 @@ Changelog
 * PR-327: Fixed typo
 
 
-1.0.7
------
+## 1.0.7
+
 * PR-265: Fixed Django 2 support (thanks to HarryLafranc for PR)
 * PR-219: Added Persian/Farsi translation (thanks to pyzenberg for PR)
 * PR-271: Fix locale names (thanks to leonardoarroyo for PR)
 
 
-1.0.6
------
+## 1.0.6
+
 * PR-191: Added sidebar pinning functionality (thanks to grigory51 for PR)
 * Issue-199: Fixed Django 1.11 context issue (thanks to gileadslostson for report)
 * Issue-202: Fixed inline-group-row:added event (thanks to a1Gupta for report)
@@ -33,8 +45,8 @@ Changelog
 * Fixed initial value for select2 ajax fields when POST request
 
 
-1.0.5
------
+## 1.0.5
+
 * PR-167: Added fallback to window.opener to support old Django popups (thanks to michaelkuty for PR)
 * PR-169: Added zh-cn localization (thanks to hbiboluo for PR)
 * PR-172: Added Polish localization (thanks to lburdzy for PR)
@@ -44,15 +56,15 @@ Changelog
 * Fixed exception when initial object not found for RelatedFieldAjaxListFilter
 
 
-1.0.4
------
+## 1.0.4
+
 * IMPORTANT: Fixed security issue with accessing model_lookup_view (when using RelatedFieldAjaxListFilter) without permissions
 * Fixed admin filters custom class attribute overrides
 * Fixed RelatedFieldAjaxListFilter to work with m2m fields
 
 
-1.0.3
------
+## 1.0.3
+
 * PR-140: Added change message as tooltip to recent action dashboard module (thanks to michaelkuty for PR)
 * PR-130: Implement JET ui for django-admin-rangefilter (thanks to timur-orudzhov for PR)
 * PR-131: Use WSGIRequest resolver_match instead of resolve (thanks to m-vdb for PR)
@@ -64,8 +76,8 @@ Changelog
 * Issue-126: Fixed related popups for new items in tabular inlines (thanks to kmorey for report)
 
 
-1.0.2
------
+## 1.0.2
+
 * PR-115: Removed mock request from get_model_queryset to fix 3rd party packages (thanks to imdario for PR)
 * PR-106: Added Spanish localization (thanks to SalahAdDin for PR)
 * PR-107, 119: Added Brazilian Portuguese localization (thanks to sedir, mord4z for PR)
@@ -83,15 +95,15 @@ Changelog
 * Issue-128: Fixed delete confirmation submit button misplacement (thanks to retailify for report)
 
 
-1.0.1
------
+## 1.0.1
+
 * StackedInline from earlier JET versions is back as a CompactInline custom class
 * Changed license to AGPLv3
 * Fixed filters with multiple selectable items behavior
 
 
-1.0.0
------
+## 1.0.0
+
 * Fixed dashboard module buttons mobile layout misplacement
 * Fixed double tap menu issue for iOS devices
 * Fixed changelist footer from fixed position transition
@@ -112,8 +124,8 @@ Changelog
 * Added support for filters with multiple select
 
 
-0.9.1
------
+## 0.9.1
+
 * Mobile UX improved
 * Refactored and optimized locale files
 * More documentation added
@@ -130,8 +142,8 @@ Changelog
 * Added Django 1.10.0 tests
 
 
-0.9.0
------
+## 0.9.0
+
 * Almost complete layout rewrite with only 3 template overrides
 * Responsive layout for mobile devices
 * Reorganized scripts (Browserify + gulp)
@@ -143,8 +155,8 @@ Changelog
 * Fixed compatibility issue with Django 1.10
 
 
-0.1.5
------
+## 0.1.5
+
 * Add inlines.min.js
 * Specify IE compatibility version
 * Add previous/next buttons to change form
@@ -155,8 +167,8 @@ Changelog
 * PR-73: Added missing safe template tag on the change password page (thanks to JensAstrup for pull request)
 
 
-0.1.4
------
+## 0.1.4
+
 * [Feature] Side bar compact mode (lists all models without opening second menu)
 * [Feature] Custom side bar menu applications and models content and ordering
 * [Feature] Related objects actions in nice-looking popup instead of new window
@@ -169,8 +181,8 @@ Changelog
 * [Improvement] Add top bar arrow transition
 
 
-0.1.3
------
+## 0.1.3
+
 * [Feature] Add theme choosing ability
 * [Feature] New color themes
 * [Fix] Refactor themes
@@ -181,8 +193,8 @@ Changelog
 * [Fix] Issue-19: Fixed datetime today button (thanks to carlosfvieira for the report)
 
 
-0.1.2
------
+## 0.1.2
+
 * [Fix] Issue-14: Fixed ajax fields choices being rendered in page (thanks to dnmellen for the report)
 * [Fix] Issue-15: Fixed textarea text wrapping in Firefox
 * [Feature] PR-16: Allow usage of select2_lookups filter in ModelForms outside of Admin (thansk to dnmellen for pull request)
@@ -193,16 +205,16 @@ Changelog
 * [Feature] Separate static browser cache for each jet version
 
 
-0.1.1
------
+## 0.1.1
+
 * [Feature] Added fade animation to sidebar application popup
 * [Fix] Issue-10: Fixed ability to display multiple admin form fields on the same line (thanks to blueicefield for the report)
 * [Fix] Fixed broken auth page layout for some translations
 * [Fix] Issue-11: Fixed setup.py open file in case utf-8 path (thanks to edvm for the report)
 
 
-0.1.0
------
+## 0.1.0
+
 * [Fix] Issue-9: Fixed dashboard application templates not being loaded because of bad manifest (thanks to blueicefield for the report)
 * [Fix] Added missing localization for django 1.6
 * [Fix] Added importlib requirement for python 2.6
@@ -211,8 +223,8 @@ Changelog
 * [Improvement] Expand non dashboard sidebar width
 
 
-0.0.9
------
+## 0.0.9
+
 * [Feature] Replace sidemenu scrollbars with Mac-like ones
 * [Feature] Added dashboard reset button
 * [Feature] Updated sidebar links ui
@@ -221,13 +233,13 @@ Changelog
 * [Fix] Fixed metrics requests timezone to be TIME_ZONE from settings
 
 
-0.0.8
------
+## 0.0.8
+
 * Change license to GPLv2
 
 
-0.0.7
------
+## 0.0.7
+
 * [Feature] Added Google Analytics visitors totals dashboard widget
 * [Feature] Added Google Analytics visitors chart dashboard widget
 * [Feature] Added Google Analytics period visitors dashboard widget
@@ -254,30 +266,22 @@ Changelog
 * [Fix] Fixed 500 when adding module if no module type specified
 
 
-0.0.6
------
+## 0.0.6
 
 * [Feature] Added initial unit tests
 * [Fixes] Compatibility fixes
 
 
-0.0.5
------
+## 0.0.5
 
 * [Feature] Added ability to set your own branding in the top of the sidebar
 
 
-0.0.4
------
+## 0.0.4
 
 * [Feature] Added Python 3 support
 
 
-0.0.1
------
+## 0.0.1
 
 * Initial release
-
-
-
-

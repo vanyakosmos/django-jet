@@ -1,0 +1,146 @@
+# Django JET
+
+![image](https://raw.githubusercontent.com/geex-arts/jet/static/logo.png)
+
+- master test: [![image](https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=master)](https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Amaster)
+- dev tests: [![image](https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=dev)](https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Adev)
+- home page: <http://jet.geex-arts.com/>
+- live demo: <http://demo.jet.geex-arts.com/admin/>
+- documentation: <http://jet.readthedocs.org/>
+- PyPI: <https://pypi.python.org/pypi/django-jet>
+
+
+## Why Django JET?
+
+- New fresh look
+- Responsive mobile interface
+- Useful admin home page
+- Minimal template overriding
+- Easy integration
+- Themes support
+- Autocompletion
+- Handy controls
+
+## Screenshots
+
+![image](https://raw.githubusercontent.com/geex-arts/django-jet/static/screen1.png)
+
+![image](https://raw.githubusercontent.com/geex-arts/django-jet/static/screen2.png)
+
+![image](https://raw.githubusercontent.com/geex-arts/django-jet/static/screen3.png)
+
+## Installation
+
+- Download and install latest version of Django JET:
+
+```bash
+pip install django-jet
+# or
+easy_install django-jet
+```
+
+- Add 'jet' application to the INSTALLED\_APPS setting of your Django project 
+settings.py file (note it should be before 'django.contrib.admin'):
+
+```python
+INSTALLED_APPS = (
+    ...,
+    'jet',
+    'django.contrib.admin',
+)
+```
+
+- Make sure `django.template.context_processors.request` context processor 
+is enabled in settings.py (Django 1.8+ way):
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                ...,
+                'django.template.context_processors.request',
+                ...,
+            ],
+        },
+    },
+]
+```
+
+- Add URL-pattern to the urlpatterns of your Django project urls.py file 
+(they are needed for related–lookups and autocompletes):
+
+```python
+urlpatterns = patterns(
+    '',
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('admin/', include(admin.site.urls)),
+    ...
+)
+```
+
+- Create database tables:
+
+```bash
+python manage.py migrate jet
+```
+
+- Collect static if you are in production environment:
+
+```bash
+python manage.py collectstatic
+```
+
+- Clear your browser cache
+
+## Dashboard installation
+
+Dashboard is located into a separate application. So after a typical JET 
+installation it won't be active. To enable dashboard application follow these steps:
+
+- Add 'jet.dashboard' application to the INSTALLED\_APPS setting of your Django 
+project settings.py file (note it should be before 'jet'):
+
+```python
+INSTALLED_APPS = (
+    ...,
+    'jet.dashboard',
+    'jet',
+    'django.contrib.admin',
+    ...,
+)
+```
+
+- Add URL-pattern to the urlpatterns of your Django project urls.py file 
+(they are needed for related–lookups and autocompletes):
+
+```python
+urlpatterns = patterns(
+    '',
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+    path('admin/', include(admin.site.urls)),
+    ...,
+)
+```
+
+- **For Google Analytics widgets only** install python package:
+
+```bash
+pip install google-api-python-client==1.4.1
+```
+
+- Create database tables:
+
+```bash
+python manage.py migrate dashboard
+```
+
+- Collect static if you are in production environment:
+
+```bash
+python manage.py collectstatic
+```
