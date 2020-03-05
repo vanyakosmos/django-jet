@@ -43,7 +43,7 @@ Themes.prototype = {
                     .attr('rel', 'stylesheet')
                     .addClass(this['class'])
                     .attr('href', this['url'])
-                    .load(onCssLoaded)
+                    .ready(onCssLoaded)
                     .appendTo('head');
                 $('.' + this['class'])
                     .slice(0, -2)
