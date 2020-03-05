@@ -49,17 +49,15 @@
                 {% for app in app_list %}
                     {% if app.has_perms and app.pinned %}
                         <a{% if app.url %} href="{{ app.url }}"{% endif %}
+                            {% if app.url_blank %} target="_blank"{% endif %}
                                            class="sidebar-link popup-section-link app-item"
                                            data-app-label="{{ app.app_label }}"
                                            data-popup-section-class="sidebar-popup-section-{{ app.app_label }}"
-                                           data-order="{{ forloop.counter }}"
-                            {% if app.url_blank %}
-                                           target="_blank"{% endif %}>
-                        <span class="sidebar-left collapsible">
-                            <span class="sidebar-left-pin icon-star pin-toggle"></span>
-                            <span class="sidebar-left-unpin icon-cross pin-toggle"></span>
-                        </span>
-
+                                           data-order="{{ forloop.counter }}">
+                            <span class="sidebar-left collapsible">
+                                <span class="sidebar-left-pin icon-star pin-toggle"></span>
+                                <span class="sidebar-left-unpin icon-cross pin-toggle"></span>
+                            </span>
                             <span class="sidebar-right">
                             <span class="sidebar-right-arrow icon-arrow-right"></span>
                         </span>
@@ -72,8 +70,7 @@
                 {% endfor %}
             </div>
             <a href="#" class="sidebar-center-link apps-hide">
-                <span
-                    class="apps-hide-label apps-visible">{% trans "Hide applications" %}</span>
+                <span class="apps-hide-label apps-visible">{% trans "Hide applications" %}</span>
                 <span class="apps-hide-label apps-hidden">{% trans "Show hidden" %}</span>
             </a>
             <div class="apps-list">

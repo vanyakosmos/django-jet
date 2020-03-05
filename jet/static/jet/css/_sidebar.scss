@@ -398,6 +398,10 @@
   }
 
   .apps-hide {
+    &:not(.apps-visible):not(.apps-hidden) {
+      display: none;
+    }
+
     &-label {
       display: none;
     }
