@@ -12,8 +12,11 @@ from django.utils.safestring import mark_safe
 
 from jet import __version__, settings
 from jet.models import Bookmark
-from jet.utils import get_admin_site, get_menu_items, get_model_instance_label, get_model_queryset, \
-    get_possible_language_codes
+from jet.sidebar import Sidebar
+from jet.utils import (
+    get_admin_site, get_menu_items, get_model_instance_label, get_model_queryset,
+    get_possible_language_codes,
+)
 
 
 register = template.Library()
@@ -248,3 +251,8 @@ def jet_static_translation_urls():
                 break
 
     return urls
+
+
+@register.simple_tag(takes_context=True)
+def jet_render_sidebar(context):
+    return Sidebar(context.get('request'), context).render()
