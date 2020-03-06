@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "jet"
+name = "djet2"
 version = "1.0.8-alpha.1"
 description = "Modern template for Django admin interface with improved functionality"
 authors = ["Denis Kildishev <support@jet.geex-arts.com>"]

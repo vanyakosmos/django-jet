@@ -9,11 +9,12 @@ master tests|[![image][master-tests-badge]][master-tests]
 dev tests|[![image][dev-tests-badge]][dev-tests]
 live demo|http://demo.jet.geex-arts.com/admin/
 documentation|http://jet.readthedocs.org/
+PyPi|https://pypi.org/project/djet2
 
-[master-tests]: https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Amaster
-[master-tests-badge]: https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=master
-[dev-tests]: https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Adev
-[dev-tests-badge]: https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=dev
+[master-tests]: https://github.com/vanyakosmos/djet2/actions?query=workflow%3Atest+branch%3Amaster
+[master-tests-badge]: https://github.com/vanyakosmos/djet2/workflows/test/badge.svg?branch=master
+[dev-tests]: https://github.com/vanyakosmos/djet2/actions?query=workflow%3Atest+branch%3Adev
+[dev-tests-badge]: https://github.com/vanyakosmos/djet2/workflows/test/badge.svg?branch=dev
 
 
 ## Why Django JET?
@@ -40,7 +41,7 @@ documentation|http://jet.readthedocs.org/
 - Download and install latest version of Django JET:
 
 ```bash
-pip install django-jet
+pip install djet2
 ```
 
 - Add 'jet' application to the INSTALLED\_APPS setting of your Django project 
@@ -98,7 +99,8 @@ python manage.py migrate jet
 python manage.py collectstatic
 ```
 
-- Clear your browser cache
+- Clear your browser cache:
+    - firefox/chrome: <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>) for hard reload
 
 ## Dashboard installation
 
@@ -134,6 +136,8 @@ urlpatterns = patterns(
 - **For Google Analytics widgets only** install python package:
 
 ```bash
+pip install djet2[google_analytics]
+# or 
 pip install google-api-python-client==1.4.1
 ```
 
