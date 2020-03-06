@@ -7,5 +7,7 @@ testcov:
 buildstatic:
 	NODE_ENV=production gulp build
 
-build: buildstatic
+buildpackage:
 	poetry build -f sdist
+
+build: buildstatic buildpackage

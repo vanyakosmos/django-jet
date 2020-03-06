@@ -1,5 +1,4 @@
 import itertools
-from pprint import pprint
 from typing import List
 
 from django.dispatch import Signal
@@ -99,8 +98,6 @@ class Sidebar(Section):
 
     def get_context_data(self, request, context):
         context = super(Sidebar, self).get_context_data(request, context)
-        print('CONTEXT')
-        pprint(context)
         return context
 
     def render(self, request=None, context=None):

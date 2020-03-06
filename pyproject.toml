@@ -21,10 +21,21 @@ classifiers=[
   "Topic :: Software Development",
   "Topic :: Software Development :: User Interfaces",
 ]
+packages = [
+    { include = "jet" },
+]
 exclude = [
   "jet/**/*.css.map",
   "jet/**/*.scss",
-  "jet/static/jet/js/src",
+  "jet/static/jet/js/src/*",
+]
+include = [
+  "jet/locale/*/LC_MESSAGES/*.mo",
+  "jet/dashboard/locale/*/LC_MESSAGES/*.mo",
+  "jet/static/jet/css/vendor.css",
+  "jet/static/jet/css/themes/*/*.css",
+  "jet/static/jet/js/build/bundle.min.js",
+  "jet/static/jet/js/i18n/*/*.js",
 ]
 
 [tool.poetry.dependencies]
