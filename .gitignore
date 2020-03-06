@@ -291,3 +291,9 @@ dmypy.json
 .pyre/
 
 ### Custom
+jet/static/jet/css/vendor.css
+jet/static/jet/css/themes/*/*.css
+jet/static/jet/css/themes/*/*.css.map
+jet/static/jet/js/build
+jet/static/jet/js/i18n
+!**/.gitkeep
