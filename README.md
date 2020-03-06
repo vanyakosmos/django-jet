@@ -2,12 +2,18 @@
 
 ![image](https://raw.githubusercontent.com/geex-arts/jet/static/logo.png)
 
-- master test: [![image](https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=master)](https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Amaster)
-- dev tests: [![image](https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=dev)](https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Adev)
-- home page: <http://jet.geex-arts.com/>
-- live demo: <http://demo.jet.geex-arts.com/admin/>
-- documentation: <http://jet.readthedocs.org/>
-- PyPI: <https://pypi.python.org/pypi/django-jet>
+
+**what**|**where**
+-----|-----
+master tests|[![image][master-tests-badge]][master-tests]
+dev tests|[![image][dev-tests-badge]][dev-tests]
+live demo|http://demo.jet.geex-arts.com/admin/
+documentation|http://jet.readthedocs.org/
+
+[master-tests]: https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Amaster
+[master-tests-badge]: https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=master
+[dev-tests]: https://github.com/vanyakosmos/django-jet/actions?query=workflow%3Atest+branch%3Adev
+[dev-tests-badge]: https://github.com/vanyakosmos/django-jet/workflows/test/badge.svg?branch=dev
 
 
 ## Why Django JET?
@@ -35,8 +41,6 @@
 
 ```bash
 pip install django-jet
-# or
-easy_install django-jet
 ```
 
 - Add 'jet' application to the INSTALLED\_APPS setting of your Django project 
