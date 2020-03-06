@@ -2,26 +2,32 @@
 name = "jet"
 version = "1.0.8"
 description = "Modern template for Django admin interface with improved functionality"
-authors = ["Denis Kildishev <support@jet.geex-arts.com>", "Bachynin Ivan <bachynin.i@gmail.com>"]
+authors = ["Denis Kildishev <support@jet.geex-arts.com>"]
+maintainers = ["Bachynin Ivan <bachynin.i@gmail.com>"]
 license = "AGPL-3.0"
 readme = "README.md"
-homepage = "https://github.com/vanyakosmos/django-jet"
+homepage = "https://github.com/vanyakosmos/djet2"
 keywords = ["django", "admin", "ui"]
 classifiers=[
-      "Development Status :: 3 - Alpha",
-      "Framework :: Django",
-      "License :: Free for non-commercial use",
-      "License :: OSI Approved :: GNU Affero General Public License v3",
-      "Intended Audience :: Developers",
-      "Intended Audience :: System Administrators",
-      "Operating System :: OS Independent",
-      "Programming Language :: Python",
-      "Programming Language :: Python :: 3.7",
-      "Programming Language :: Python :: 3.8",
-      "Environment :: Web Environment",
-      "Topic :: Software Development",
-      "Topic :: Software Development :: User Interfaces",
-  ]
+  "Development Status :: 3 - Alpha",
+  "Framework :: Django",
+  "License :: Free for non-commercial use",
+  "License :: OSI Approved :: GNU Affero General Public License v3",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Environment :: Web Environment",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: User Interfaces",
+]
+exclude = [
+  "jet/**/*.css.map",
+  "jet/**/*.scss",
+  "jet/static/jet/js/src",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
