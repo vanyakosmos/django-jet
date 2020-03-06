@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jet"
-version = "1.0.8"
+version = "1.0.8-alpha.1"
 description = "Modern template for Django admin interface with improved functionality"
 authors = ["Denis Kildishev <support@jet.geex-arts.com>"]
 maintainers = ["Bachynin Ivan <bachynin.i@gmail.com>"]
@@ -50,6 +50,7 @@ pytest-django = "^3.8.0"
 pytest-env = "^0.6.2"
 pytest-cov = "^2.8.1"
 django-debug-toolbar = "^2.2"
+django-debug-toolbar-template-profiler = "^2.0.0"
 
 [tool.poetry.extras]
 google_analytics = ["google-api-python-client"]

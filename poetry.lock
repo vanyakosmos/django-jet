@@ -82,6 +82,18 @@ Django = ">=1.11"
 sqlparse = ">=0.2.0"
 
 [[package]]
+category = "dev"
+description = "Displays template rendering time on the timeline"
+name = "django-debug-toolbar-template-profiler"
+optional = false
+python-versions = "*"
+version = "2.0.0"
+
+[package.dependencies]
+django-debug-toolbar = ">=2.0"
+wrapt = "*"
+
+[[package]]
 category = "main"
 description = "Google API Client Library for Python"
 name = "google-api-python-client"
@@ -346,6 +358,14 @@ version = "0.1.8"
 
 [[package]]
 category = "dev"
+description = "Module for decorators, wrappers and monkey patching."
+name = "wrapt"
+optional = false
+python-versions = "*"
+version = "1.12.0"
+
+[[package]]
+category = "dev"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 marker = "python_version < \"3.8\""
 name = "zipp"
@@ -361,7 +381,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 google_analytics = ["google-api-python-client"]
 
 [metadata]
-content-hash = "0b2505adb0af068c848d9b705f614f211bdb9b05a001a03c6b4740c74807c26d"
+content-hash = "89966c9fc26da0008529342b9a54afda187191ea366263033dc2bedf37a1dbfb"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -421,6 +441,10 @@ django = [
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
     {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
+]
+django-debug-toolbar-template-profiler = [
+    {file = "django-debug-toolbar-template-profiler-2.0.0.tar.gz", hash = "sha256:c983c9bd9fee1d0e297c52fa3551692e505eae9fc641e0d92dfc0d1b7b135a15"},
+    {file = "django_debug_toolbar_template_profiler-2.0.0-py2.py3-none-any.whl", hash = "sha256:e18f645b05b354ce3172e43cbcea7447431b1acdaced8a2291229548185676a2"},
 ]
 google-api-python-client = [
     {file = "google-api-python-client-1.4.1.tar.gz", hash = "sha256:63d3bad8b29337cfd1c8b96e403dc0fe61e437a118eeff0c1eaa109c96e13f9c"},
@@ -534,6 +558,9 @@ uritemplate = [
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
     {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
+]
+wrapt = [
+    {file = "wrapt-1.12.0.tar.gz", hash = "sha256:0ec40d9fd4ec9f9e3ff9bdd12dbd3535f4085949f4db93025089d7a673ea94e8"},
 ]
 zipp = [
     {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},
