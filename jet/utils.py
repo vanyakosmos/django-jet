@@ -452,3 +452,19 @@ def user_is_authenticated(user):
         return user.is_authenticated
     else:
         return user.is_authenticated()
+
+
+def extract_widget_data(widget):
+    data = getattr(widget, 'data')
+    if not data:
+        return {}
+    res = {}
+    for key, value in data.items():
+        if value is None:
+            continue
+        if isinstance(value, bool):
+            value = str(value).lower()
+        key = key.replace('_', '-')
+        key = f'data-{key}'
+        res[key] = value
+    return res

@@ -155,8 +155,8 @@ Select2.prototype = {
             dropdownAdapter: DropdownAdapter,
             placeholder: opt('placeholder', ),
             width: opt('width', 'auto'),
-            minimumInputLength: opt('minimumInputLength', 0),
-            allowClear: opt('allowClear', false),
+            minimumInputLength: opt('minimum-input-length', 0),
+            allowClear: opt('allow-clear', false),
         };
 
         if ($select.hasClass('ajax')) {
@@ -166,7 +166,7 @@ Select2.prototype = {
             const model = opt('model');
             const objectId = opt('object-id');
             const blank = opt('blank', false);
-            const pageSize = 100;
+            const pageSize = opt('page-size', 10);
 
             settings['ajax'] = {
                 delay: opt('delay', 250),

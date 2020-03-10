@@ -17,8 +17,8 @@ from jet import __version__, settings
 from jet.models import Bookmark
 from jet.sidebar import Sidebar
 from jet.utils import (
-    get_admin_site, get_menu_items, get_model_instance_label, get_model_queryset,
-    get_possible_language_codes,
+    extract_widget_data, get_admin_site, get_menu_items, get_model_instance_label,
+    get_model_queryset, get_possible_language_codes,
 )
 
 
@@ -87,6 +87,7 @@ def jet_select2_lookups(field: BoundField):
         'data-app-label': app_label,
         'data-model': model_name,
         'data-ajax--url': url,
+        **extract_widget_data(form_field.widget),
     }
 
     initial_value = field.value()
