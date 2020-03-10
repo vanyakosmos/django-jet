@@ -465,10 +465,3 @@ def format_widget_data(data: dict):
         key = f'data-{key}'
         res[key] = value
     return res
-
-
-def extract_widget_data(widget):
-    data = getattr(widget, 'data')
-    if not data:
-        return {}
-    return format_widget_data(data)
