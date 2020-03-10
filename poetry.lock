@@ -70,7 +70,7 @@ argon2 = ["argon2-cffi (>=16.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Fresh autocompletes for Django"
 name = "django-autocomplete-light"
 optional = false
@@ -398,7 +398,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 google_analytics = ["google-api-python-client"]
 
 [metadata]
-content-hash = "16aaa90f12dc8905aba3b19da2e9db405b64b6433c273bb05091627f2cea852c"
+content-hash = "780b0703caa3104cdb67200beb8a051b19387f212244a3d26bda1a0e22eeff4c"
 python-versions = "^3.7"
 
 [metadata.files]
