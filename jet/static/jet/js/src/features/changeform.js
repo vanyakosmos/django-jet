@@ -31,6 +31,7 @@ ChangeForm.prototype = {
 
         $(document).on('submit', 'form', function() {
             $(window).off('beforeunload', self.onWindowBeforeUnload);
+            $changeForm.find('option[value="-1"]').val("");  // dirty patch invalid id
         });
 
         $inputs.on('change', $.proxy(this.onFormInputChanged, this, $inputs));

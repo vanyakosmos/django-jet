@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from jet.admin import CompactInline
 from jet.filters import RelatedFieldAjaxListFilter
+from .forms import ReviewForm
 from .models import Author, Book, Review
 
 
@@ -43,3 +44,4 @@ class ReviewAdmin(admin.ModelAdmin):
         ('book', RelatedFieldAjaxListFilter),
     )
     list_per_page = 5
+    form = ReviewForm

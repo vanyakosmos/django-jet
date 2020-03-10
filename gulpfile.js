@@ -1,3 +1,5 @@
+const prod = process.env.NODE_ENV === 'production';
+
 require('es6-promise').polyfill();
 
 
@@ -28,23 +30,23 @@ const cssProcessors = [
 ];
 
 function scripts() {
-    return browserify('./jet/static/jet/js/src/main.js')
+    return browserify('./jet/static/jet/js/src/main.js', {debug: prod})
         .bundle()
         .on('error', function (error) {
             console.error(error);
         })
         .pipe(source('bundle.min.js'))
         .pipe(buffer())
-        .pipe(gulpif(process.env.NODE_ENV === 'production', uglify()))
+        .pipe(gulpif(prod, uglify()))
         .pipe(gulp.dest('./jet/static/jet/js/build/'));
 }
 
 function styles() {
     return gulp.src('./jet/static/jet/css/**/*.scss')
         .pipe(sourcemaps.init())
-        .pipe(sass({
+        .pipe(sass(prod ? {
             outputStyle: 'compressed'
-        }))
+        } : {}))
         .on('error', function (error) {
             console.error(error);
         })

@@ -1,5 +1,7 @@
-from django.views.decorators.http import require_POST, require_GET
-from jet.forms import AddBookmarkForm, RemoveBookmarkForm, ToggleApplicationPinForm, ModelLookupForm
+from dal_select2.views import Select2QuerySetView
+from django.views.decorators.http import require_POST
+
+from jet.forms import AddBookmarkForm, ModelLookupForm, RemoveBookmarkForm, ToggleApplicationPinForm
 from jet.models import Bookmark
 from jet.utils import JsonResponse
 
@@ -54,17 +56,13 @@ def toggle_application_pin_view(request):
     return JsonResponse(result)
 
 
-@require_GET
-def model_lookup_view(request):
-    result = {'error': False}
+class ModelLookupView(Select2QuerySetView):
+    def get_queryset(self):
+        form = ModelLookupForm(self.request, self.request.GET)
+        if form.is_valid():
+            return form.get_queryset()
+        else:
+            return form.model_cls.objects.none()
 
-    form = ModelLookupForm(request, request.GET)
 
-    if form.is_valid():
-        items, total = form.lookup()
-        result['items'] = items
-        result['total'] = total
-    else:
-        result['error'] = True
-
-    return JsonResponse(result)
+model_lookup_view = ModelLookupView.as_view()

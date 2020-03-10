@@ -4,7 +4,10 @@ from urllib.parse import parse_qsl
 
 from django import template
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
-from django.forms import CheckboxInput, ModelChoiceField, ModelMultipleChoiceField, Select, SelectMultiple
+from django.forms import (
+    BoundField, CheckboxInput, Field, ModelChoiceField, ModelMultipleChoiceField, Select,
+    SelectMultiple,
+)
 from django.urls import reverse
 from django.utils.encoding import smart_str
 from django.utils.formats import get_format
@@ -56,56 +59,65 @@ def jet_is_checkbox(field):
 
 
 @register.filter
-def jet_select2_lookups(field):
-    if (
-        hasattr(field, 'field') and
-        (isinstance(field.field, ModelChoiceField) or
-         isinstance(field.field, ModelMultipleChoiceField))
+def jet_select2_lookups(field: BoundField):
+    form_field: Field = getattr(field, 'field', None)
+    if not (
+        form_field and
+        (isinstance(form_field, ModelChoiceField) or
+         isinstance(form_field, ModelMultipleChoiceField))
     ):
-        qs = field.field.queryset
-        model = qs.model
+        return field
 
-        if getattr(model, 'autocomplete_search_fields', None) and getattr(field.field, 'autocomplete', True):
-            choices = []
-            app_label = model._meta.app_label
-            model_name = model._meta.object_name
+    qs = form_field.queryset
+    model = qs.model
 
-            attrs = {
-                'class': 'ajax',
-                'data-app-label': app_label,
-                'data-model': model_name,
-                'data-ajax--url': reverse('jet:model_lookup')
-            }
+    if not (
+        getattr(model, 'autocomplete_search_fields', None) and
+        getattr(form_field, 'autocomplete', True)
+    ):
+        return field
 
-            initial_value = field.value()
+    choices = []
+    app_label = model._meta.app_label
+    model_name = model._meta.object_name
+    url = getattr(form_field, 'url', reverse('jet:model_lookup'))
 
-            if hasattr(field, 'field') and isinstance(field.field, ModelMultipleChoiceField):
-                if initial_value:
-                    initial_objects = model.objects.filter(pk__in=initial_value)
-                    choices.extend(
-                        [(initial_object.pk, get_model_instance_label(initial_object))
-                         for initial_object in initial_objects]
-                    )
+    attrs = {
+        'class': 'ajax',
+        'data-app-label': app_label,
+        'data-model': model_name,
+        'data-ajax--url': url,
+    }
 
-                if isinstance(field.field.widget, RelatedFieldWidgetWrapper):
-                    field.field.widget.widget = SelectMultiple(attrs)
-                else:
-                    field.field.widget = SelectMultiple(attrs)
-                field.field.choices = choices
-            elif hasattr(field, 'field') and isinstance(field.field, ModelChoiceField):
-                if initial_value:
-                    try:
-                        initial_object = model.objects.get(pk=initial_value)
-                        attrs['data-object-id'] = initial_value
-                        choices.append((initial_object.pk, get_model_instance_label(initial_object)))
-                    except model.DoesNotExist:
-                        pass
+    initial_value = field.value()
 
-                if isinstance(field.field.widget, RelatedFieldWidgetWrapper):
-                    field.field.widget.widget = Select(attrs)
-                else:
-                    field.field.widget = Select(attrs)
-                field.field.choices = choices
+    if isinstance(form_field, ModelMultipleChoiceField):
+        if initial_value:
+            initial_objects = model.objects.filter(pk__in=initial_value)
+            choices.extend(
+                [(initial_object.pk, get_model_instance_label(initial_object))
+                 for initial_object in initial_objects]
+            )
+
+        if isinstance(form_field.widget, RelatedFieldWidgetWrapper):
+            form_field.widget.widget = SelectMultiple(attrs)
+        else:
+            form_field.widget = SelectMultiple(attrs)
+        form_field.choices = choices
+    elif isinstance(form_field, ModelChoiceField):
+        if initial_value:
+            try:
+                initial_object = model.objects.get(pk=initial_value)
+                attrs['data-object-id'] = initial_value
+                choices.append((initial_object.pk, get_model_instance_label(initial_object)))
+            except model.DoesNotExist:
+                pass
+
+        if isinstance(form_field.widget, RelatedFieldWidgetWrapper):
+            form_field.widget.widget = Select(attrs)
+        else:
+            form_field.widget = Select(attrs)
+        form_field.choices = choices
 
     return field
 

@@ -71,6 +71,23 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "dev"
+description = "Fresh autocompletes for Django"
+name = "django-autocomplete-light"
+optional = false
+python-versions = "*"
+version = "3.5.1"
+
+[package.dependencies]
+six = "*"
+
+[package.extras]
+genericm2m = ["django-generic-m2m"]
+gfk = ["django-querysetsequence (>=0.11)"]
+nested = ["django-nested-admin (>=3.0.21)"]
+tags = ["django-taggit"]
+
+[[package]]
+category = "dev"
 description = "A configurable set of panels that display various debug information about the current request/response."
 name = "django-debug-toolbar"
 optional = false
@@ -381,7 +398,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 google_analytics = ["google-api-python-client"]
 
 [metadata]
-content-hash = "89966c9fc26da0008529342b9a54afda187191ea366263033dc2bedf37a1dbfb"
+content-hash = "16aaa90f12dc8905aba3b19da2e9db405b64b6433c273bb05091627f2cea852c"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -437,6 +454,9 @@ coverage = [
 django = [
     {file = "Django-3.0.4-py3-none-any.whl", hash = "sha256:89e451bfbb815280b137e33e454ddd56481fdaa6334054e6e031041ee1eda360"},
     {file = "Django-3.0.4.tar.gz", hash = "sha256:50b781f6cbeb98f673aa76ed8e572a019a45e52bdd4ad09001072dfd91ab07c8"},
+]
+django-autocomplete-light = [
+    {file = "django-autocomplete-light-3.5.1.tar.gz", hash = "sha256:52e8d468060a5911c44300a374d74058c90e65bfdf87ace151abac67279c4ae5"},
 ]
 django-debug-toolbar = [
     {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},

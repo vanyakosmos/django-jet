@@ -146,20 +146,30 @@ Select2.prototype = {
         };
     },
     initSelect: function ($select, DropdownAdapter) {
+        function opt(key, def) {
+            return $select.data(key) || def;
+        }
+
         const settings = {
             theme: 'jet',
             dropdownAdapter: DropdownAdapter,
-            width: 'auto'
+            placeholder: opt('placeholder', ),
+            width: opt('width', 'auto'),
+            minimumInputLength: opt('minimumInputLength', 0),
+            allowClear: opt('allowClear', false),
         };
 
         if ($select.hasClass('ajax')) {
-            const contentTypeId = $select.data('content-type-id');
-            const appLabel = $select.data('app-label');
-            const model = $select.data('model');
-            const objectId = $select.data('object-id');
+
+            const contentTypeId = opt('content-type-id');
+            const appLabel = opt('app-label');
+            const model = opt('model');
+            const objectId = opt('object-id');
+            const blank = opt('blank', false);
             const pageSize = 100;
 
             settings['ajax'] = {
+                delay: opt('delay', 250),
                 dataType: 'json',
                 data: function (params) {
                     return {
@@ -172,19 +182,19 @@ Select2.prototype = {
                         object_id: objectId
                     };
                 },
-                processResults: function (data, params) {
-                    if (data.error) {
-                        return {}
+                processResults: function (data, {page, term}) {
+                    if (blank &&
+                        (page === undefined || page === 1) &&
+                        (!term || term === '<empty string>')) {
+                        data.results.unshift({
+                            id: -1,  // select2 doesn't render empty id
+                            text: '---------',
+                            disabled: false,
+                        });
                     }
-
-                    params.page = params.page || 1;
-                    const more = (params.page * pageSize) < data.total;
-
                     return {
-                        results: data.items,
-                        pagination: {
-                            more: more
-                        }
+                        results: data.results,
+                        pagination: data.pagination,
                     };
                 }
             };
