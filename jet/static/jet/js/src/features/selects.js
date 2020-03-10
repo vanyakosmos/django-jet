@@ -153,19 +153,19 @@ Select2.prototype = {
         const settings = {
             theme: 'jet',
             dropdownAdapter: DropdownAdapter,
-            placeholder: opt('placeholder', ),
+            placeholder: opt('placeholder'),
             width: opt('width', 'auto'),
             minimumInputLength: opt('minimum-input-length', 0),
             allowClear: opt('allow-clear', false),
         };
 
         if ($select.hasClass('ajax')) {
-
             const contentTypeId = opt('content-type-id');
             const appLabel = opt('app-label');
             const model = opt('model');
             const objectId = opt('object-id');
             const blank = opt('blank', false);
+            const filter = opt('filter', false);
             const pageSize = opt('page-size', 10);
 
             settings['ajax'] = {
@@ -179,16 +179,28 @@ Select2.prototype = {
                         q: params.term,
                         page: params.page,
                         page_size: pageSize,
-                        object_id: objectId
-                    };
+                        object_id: objectId,
+                        lookup_kwarg: opt('queryset--lookup'),
+                        lookup_params: JSON.stringify(opt('queryset--params')),
+                    }
                 },
                 processResults: function (data, {page, term}) {
-                    if (blank &&
-                        (page === undefined || page === 1) &&
-                        (!term || term === '<empty string>')) {
+                    const firstPage = (page === undefined || page === 1) && (!term || term === '<empty string>');
+                    if (firstPage && blank) {
                         data.results.unshift({
-                            id: -1,  // select2 doesn't render empty id
+                            id: 'null',  // select2 doesn't render empty id
                             text: '---------',
+                            disabled: false,
+                        });
+                    } else if (firstPage && filter) {
+                        data.results.unshift({
+                            id: '',
+                            text: '---',
+                            disabled: true,
+                        });
+                        data.results.unshift({
+                            id: 'null',
+                            text: filter,
                             disabled: false,
                         });
                     }

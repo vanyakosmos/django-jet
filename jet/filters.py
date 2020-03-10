@@ -1,19 +1,25 @@
-from django.contrib.admin import RelatedFieldListFilter
+import json
+
+from django.contrib.admin import ModelAdmin, RelatedFieldListFilter
 from django.contrib.admin.utils import get_model_from_relation
 from django.forms.utils import flatatt
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.encoding import smart_str
 from django.utils.html import format_html
+
+from jet.utils import format_widget_data
 
 
 class RelatedFieldAjaxListFilter(RelatedFieldListFilter):
     template = 'jet/related_field_ajax_list_filter.html'
     ajax_attrs = None
+    url = reverse_lazy('jet:model_lookup')
+    widget_data = {}
 
     def has_output(self):
         return True
 
-    def field_choices(self, field, request, model_admin):
+    def field_choices(self, field, request, model_admin: ModelAdmin):
         model = field.remote_field.model if hasattr(field, 'remote_field') else field.related_field.model
         app_label = model._meta.app_label
         model_name = model._meta.object_name
@@ -21,8 +27,11 @@ class RelatedFieldAjaxListFilter(RelatedFieldListFilter):
         self.ajax_attrs = format_html('{0}', flatatt({
             'data-app-label': app_label,
             'data-model': model_name,
-            'data-ajax--url': reverse('jet:model_lookup'),
-            'data-queryset--lookup': self.lookup_kwarg
+            'data-ajax--url': self.url,
+            'data-queryset--lookup': self.lookup_kwarg,
+            'data-queryset--params': json.dumps(dict(request.GET.items())),
+            'data-filter': f"By {self.title}",
+            **format_widget_data(self.widget_data),
         }))
 
         if self.lookup_val is None:

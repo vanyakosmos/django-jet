@@ -454,10 +454,7 @@ def user_is_authenticated(user):
         return user.is_authenticated()
 
 
-def extract_widget_data(widget):
-    data = getattr(widget, 'data')
-    if not data:
-        return {}
+def format_widget_data(data: dict):
     res = {}
     for key, value in data.items():
         if value is None:
@@ -468,3 +465,10 @@ def extract_widget_data(widget):
         key = f'data-{key}'
         res[key] = value
     return res
+
+
+def extract_widget_data(widget):
+    data = getattr(widget, 'data')
+    if not data:
+        return {}
+    return format_widget_data(data)

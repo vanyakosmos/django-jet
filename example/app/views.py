@@ -1,9 +1,8 @@
-from dal_select2.views import Select2QuerySetView
-
+from jet.views import ModelLookupView
 from .models import Book
 
 
-class BookAutocomplete(Select2QuerySetView):
+class BookAutocomplete(ModelLookupView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             return Book.objects.none()

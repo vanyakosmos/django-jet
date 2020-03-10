@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.urls import reverse_lazy
 
 from jet.admin import CompactInline
 from jet.filters import RelatedFieldAjaxListFilter
@@ -37,11 +38,16 @@ class BookAdmin(admin.ModelAdmin):
         return book.review_set.count()
 
 
+class BookFilter(RelatedFieldAjaxListFilter):
+    url = reverse_lazy('book-autocomplete')
+
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('short_text',)
     list_filter = (
-        ('book', RelatedFieldAjaxListFilter),
+        'text',
+        ('book', BookFilter),
     )
     list_per_page = 5
     form = ReviewForm
