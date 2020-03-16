@@ -3,6 +3,15 @@
 
 ## Unpublished
 
+
+## 1.0.9-alpha.3
+
+- allow to define separate dashboard for each app (see example settings)
+- allow to have several modules under one tab in changeform by using "follow" class in fieldset config
+
+
+## 1.0.9-alpha.2
+
 - setup poetry
 - fully migrate to django3 
 - update js dependencies
@@ -11,6 +20,9 @@
 - fix issue with pagination
 - add app configs and extra checks
 - add example project
+- make ajax list filter clearable
+- make select2 widget customizable
+- allow autocomplete on changeform to use custom view and being blank
 
 
 ## 1.0.8
