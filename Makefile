@@ -11,3 +11,6 @@ buildpackage:
 	poetry build -f sdist
 
 build: buildstatic buildpackage
+
+publish: build
+	poetry publish

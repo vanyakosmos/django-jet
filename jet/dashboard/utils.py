@@ -1,5 +1,7 @@
 import logging
 from importlib import import_module
+from typing import Union
+
 from jet.dashboard import settings
 
 
@@ -16,12 +18,26 @@ def import_value(path: str):
     return value
 
 
-def get_current_dashboard(location):
-    if location == 'index':
+def get_app_dashboard_config(config: Union[str, dict]):
+    if isinstance(config, str):
+        return {None: config}
+    return config
+
+
+def get_app_dashboard(app: str, config: dict):
+    print(app, config)
+    if app in config:
+        return config[app]
+    if None in config:
+        return config[None]
+    return settings.JET_DEFAULT_APP_INDEX_DASHBOARD
+
+
+def get_current_dashboard(app_label=None):
+    if app_label is None:
         path = settings.JET_INDEX_DASHBOARD
-    elif location == 'app_index':
-        path = settings.JET_APP_INDEX_DASHBOARD
     else:
-        raise ValueError('Unknown dashboard location: %s' % location)
+        config = get_app_dashboard_config(settings.JET_APP_INDEX_DASHBOARD)
+        path = get_app_dashboard(app_label, config)
     dashboard_cls = import_value(path)
     return dashboard_cls

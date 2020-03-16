@@ -6,8 +6,11 @@ def _get(key, default=None):
 
 
 # dashboard
-JET_INDEX_DASHBOARD = _get('JET_INDEX_DASHBOARD', 'jet.dashboard.dashboard.DefaultIndexDashboard')
-JET_APP_INDEX_DASHBOARD = _get('JET_APP_INDEX_DASHBOARD', 'jet.dashboard.dashboard.DefaultAppIndexDashboard')
+JET_DEFAULT_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
+JET_INDEX_DASHBOARD = _get('JET_INDEX_DASHBOARD', JET_DEFAULT_INDEX_DASHBOARD)
+# app dashboard
+JET_DEFAULT_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
+JET_APP_INDEX_DASHBOARD = _get('JET_APP_INDEX_DASHBOARD', JET_DEFAULT_APP_INDEX_DASHBOARD)
 
 # google analytics
 JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = _get('JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE')

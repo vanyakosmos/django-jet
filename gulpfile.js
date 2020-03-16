@@ -44,9 +44,7 @@ function scripts() {
 function styles() {
     return gulp.src('./jet/static/jet/css/**/*.scss')
         .pipe(sourcemaps.init())
-        .pipe(sass(prod ? {
-            outputStyle: 'compressed'
-        } : {}))
+        .pipe(sass(prod ? {outputStyle: 'compressed'} : {}))
         .on('error', function (error) {
             console.error(error);
         })
@@ -54,7 +52,7 @@ function styles() {
         .on('error', function (error) {
             console.error(error);
         })
-        .pipe(sourcemaps.write('./'))
+        .pipe(gulpif(!prod, sourcemaps.write('./')))
         .pipe(gulp.dest('./jet/static/jet/css'));
 }
 

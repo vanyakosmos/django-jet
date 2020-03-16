@@ -73,7 +73,7 @@ class AddUserDashboardModuleForm(forms.ModelForm):
             raise ValidationError('error')
 
         if 'app_label' in data:
-            index_dashboard_cls = get_current_dashboard('app_index' if data['app_label'] else 'index')
+            index_dashboard_cls = get_current_dashboard(data['app_label'])
             index_dashboard = index_dashboard_cls({'request': self.request}, app_label=data['app_label'])
 
             if 'type' in data:

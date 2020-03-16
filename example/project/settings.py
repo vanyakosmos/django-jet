@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'template_profiler_panel',
+    'core.apps.CoreConfig',
     'app.apps.AppConfig',
 ]
 
@@ -150,7 +151,12 @@ JET_SIDE_MENU_COMPACT = True
 # JET_SIDE_MENU_ITEMS = []
 JET_CHANGE_FORM_SIBLING_LINKS = True
 JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.MinimalIndexDashboard'
-JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
+# JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'  # ok
+JET_APP_INDEX_DASHBOARD = {
+    None: 'jet.dashboard.dashboard.DefaultAppIndexDashboard',  # override default
+    'app': 'jet.dashboard.dashboard.DefaultAppIndexDashboard',  # redundant
+    'core': 'core.dashboard.CustomAppIndexDashboard',  # custom
+}
 
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',
