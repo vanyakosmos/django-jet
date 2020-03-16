@@ -25,7 +25,6 @@ def get_app_dashboard_config(config: Union[str, dict]):
 
 
 def get_app_dashboard(app: str, config: dict):
-    print(app, config)
     if app in config:
         return config[app]
     if None in config:

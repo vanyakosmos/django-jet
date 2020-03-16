@@ -36,7 +36,6 @@ def check_index_dashboard(app_configs, **kwargs):
 @register()
 def check_app_index_dashboard(app_configs, **kwargs):
     app_labels = {a.label for a in apps.get_app_configs()}
-    print('app_labels', app_labels)
     errors = []
     config = get_app_dashboard_config(settings.JET_APP_INDEX_DASHBOARD)
     for key in config.keys():
