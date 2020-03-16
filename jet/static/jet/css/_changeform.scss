@@ -1053,6 +1053,10 @@ form .related-widget-wrapper ul {
     &.selected {
       display: block !important;
     }
+
+    &.follow {
+      padding-top: 0;
+    }
   }
 }
 

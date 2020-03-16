@@ -6,25 +6,31 @@ const ChangeFormTabsUpdater = function ($changeform) {
 };
 
 ChangeFormTabsUpdater.prototype = {
-    findTabs: function($modules, $inlines) {
+    findTabs: function ($modules, $inlines) {
         const tabs = [];
 
-        $modules.each(function(i) {
+        let j = 0;
+        $modules.each(function (i) {
             const $module = $(this);
+            if (i !== 0 && !$module.hasClass('follow')) {
+                j++;
+            }
+
             const $header = $module.find('> h2').first();
             const title = $header.length !== 0 ? $header.html() : t('General');
-            const className = 'module_' + i;
+            const className = 'module_' + j;
 
             $module.addClass(className);
-            $header.remove();
-
-            tabs.push({
-                className: className,
-                title: title
-            });
+            if (!$module.hasClass('follow')) {
+                $header.remove();
+                tabs.push({
+                    className: className,
+                    title: title
+                });
+            }
         });
 
-        $inlines.each(function(i) {
+        $inlines.each(function (i) {
             const $inline = $(this);
             const $header = $inline.find('> h2, > fieldset.module > h2, .tabular.inline-related > .module > h2').first();
             const title = $header.length !== 0 ? $header.html() : t('General');
@@ -41,14 +47,14 @@ ChangeFormTabsUpdater.prototype = {
 
         return tabs;
     },
-    createTabs: function($contentWrappers, tabs) {
+    createTabs: function ($contentWrappers, tabs) {
         if (tabs.length < 2) {
             return;
         }
 
         const $tabs = $('<ul>').addClass('changeform-tabs');
 
-        $.each(tabs, function() {
+        $.each(tabs, function () {
             const tab = this;
             const $item = $('<li>')
                 .addClass('changeform-tabs-item');
@@ -63,7 +69,7 @@ ChangeFormTabsUpdater.prototype = {
 
         $tabs.insertBefore($contentWrappers.first());
     },
-    run: function() {
+    run: function () {
         const $container = this.$changeform.find('#content-main > form > div');
         const $modules = $container.find('> .module');
         const $inlines = $container.find('> .inline-group');
@@ -80,8 +86,8 @@ ChangeFormTabsUpdater.prototype = {
     }
 };
 
-$(document).ready(function() {
-    $('.change-form').each(function() {
+$(document).ready(function () {
+    $('.change-form').each(function () {
         new ChangeFormTabsUpdater($(this)).run();
     });
 });

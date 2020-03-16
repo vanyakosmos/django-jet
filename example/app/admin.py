@@ -33,6 +33,11 @@ class BookAdmin(admin.ModelAdmin):
     list_per_page = 5
     readonly_fields = ('authors_list',)
     exclude = ('authors',)
+    fieldsets = (
+        (None, {'fields': ('title',)}),
+        ("Dates", {'fields': ('published',), 'classes': ('follow',)}),
+        ("Authors", {'fields': ('authors_list',)}),
+    )
 
     def reviews(self, book: Book):
         return book.review_set.count()
