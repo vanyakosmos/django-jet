@@ -4,6 +4,12 @@
 ## Unpublished
 
 
+## 1.0.9-alpha.5
+
+- fix date/time widgets padding
+- fix permissions check on autocomplete lookups and sidebar urls
+
+
 ## 1.0.9-alpha.3
 
 - allow to define separate dashboard for each app (see example settings)
