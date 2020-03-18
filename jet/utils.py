@@ -67,7 +67,7 @@ def get_app_list(context, order=True):
                     'perms': perms,
                     'model_name': model._meta.model_name
                 }
-                if perms.get('change', False):
+                if perms.get('view', False) or perms.get('change', False):
                     try:
                         model_dict['admin_url'] = reverse('admin:%s_%s_changelist' % info, current_app=admin_site.name)
                     except NoReverseMatch:
@@ -145,14 +145,14 @@ def get_model_instance_label(instance):
     return smart_str(instance)
 
 
-class SuccessMessageMixin(object):
+class SuccessMessageMixin:
     """
     Adds a success message on successful form submission.
     """
     success_message = ''
 
     def form_valid(self, form):
-        response = super(SuccessMessageMixin, self).form_valid(form)
+        response = super().form_valid(form)
         success_message = self.get_success_message(form.cleaned_data)
         if success_message:
             messages.success(self.request, success_message)
@@ -448,10 +448,10 @@ def context_to_dict(context):
 
 
 def user_is_authenticated(user):
-    if not hasattr(user.is_authenticated, '__call__'):
-        return user.is_authenticated
-    else:
+    if callable(user.is_authenticated):
         return user.is_authenticated()
+    else:
+        return user.is_authenticated
 
 
 def format_widget_data(data: dict):
