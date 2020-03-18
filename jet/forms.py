@@ -1,19 +1,13 @@
-import logging
 import operator
 from functools import reduce
 
 from django import forms
 from django.apps.registry import apps
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
 from jet.models import Bookmark, PinnedApplication
 from jet.utils import user_is_authenticated
-
-
-logger = logging.getLogger(__name__)
 
 
 class AddBookmarkForm(forms.ModelForm):
@@ -111,19 +105,18 @@ class ModelLookupForm(forms.Form):
         data = super(ModelLookupForm, self).clean()
 
         if not user_is_authenticated(self.request.user) or not self.request.user.is_staff:
-            raise ValidationError('error')
+            raise ValidationError('user is not authenticated or is not staff')
 
         try:
             self.model_cls = apps.get_model(data['app_label'], data['model'])
         except Exception as e:
-            logger.debug(e)
-            raise ValidationError('error')
+            raise ValidationError(e)
 
-        content_type = ContentType.objects.get_for_model(self.model_cls)
-        permission = Permission.objects.filter(content_type=content_type, codename__startswith='change_').get()
-
-        if not self.request.user.has_perm('{}.{}'.format(data['app_label'], permission.codename)):
-            raise ValidationError('error')
+        app = data['app_label']
+        model = self.model_cls._meta.model_name
+        permissions = (f"{app}.view_{model}", f"{app}.change_{model}")
+        if not any(map(self.request.user.has_perm, permissions)):
+            raise ValidationError("user doesn't have permissions")
 
         return data
 

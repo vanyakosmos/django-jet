@@ -1,4 +1,5 @@
 import json
+import logging
 
 from dal_select2.views import Select2QuerySetView
 from django.utils.http import urlencode
@@ -7,6 +8,9 @@ from django.views.decorators.http import require_POST
 from jet.forms import AddBookmarkForm, ModelLookupForm, RemoveBookmarkForm, ToggleApplicationPinForm
 from jet.models import Bookmark
 from jet.utils import JsonResponse
+
+
+logger = logging.getLogger(__name__)
 
 
 @require_POST
@@ -69,6 +73,7 @@ class ModelLookupView(Select2QuerySetView):
         if self.form.is_valid():
             return self.form.get_queryset()
         else:
+            logger.debug(self.form.errors.as_data())
             return self.form.model_cls.objects.none()
 
     def get_results(self, context):
@@ -76,8 +81,9 @@ class ModelLookupView(Select2QuerySetView):
             form = self.form
         else:
             form = ModelLookupForm(self.request, self.request.GET)
-            if not form.is_valid():
-                return []
+            # just populate cleaned_data,
+            # error should be caught in get_queryset
+            form.is_valid()
         out = [
             {
                 'id': self.get_result_value(obj),
