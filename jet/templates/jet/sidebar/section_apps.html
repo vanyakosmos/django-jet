@@ -6,21 +6,23 @@
             {% if app.has_perms %}
                 <div class="sidebar-section">
                     <div class="sidebar-title">
-                        <a{% if app.url %} href="{{ app.url }}"{% endif %}
-                                           class="sidebar-title-link"
-                            {% if app.url_blank %} target="_blank"{% endif %}>
+                        <a class="{% if app.current %}current{% endif %} sidebar-title-link"
+                            {% if app.url %} href="{{ app.url }}"{% endif %}
+                            {% if app.url_blank %} target="_blank"{% endif %}
+                        >
                             {{ app.label }}
                         </a>
                     </div>
                     {% for model in app.items %}
                         {% if model.has_perms %}
                             <div>
-                                <a{% if model.url %} href="{{ model.url }}"{% endif %}
-                                                     class="sidebar-link"
-                                    {% if model.url_blank %} target="_blank"{% endif %}>
-                                <span class="sidebar-right">
-                                    <span class="sidebar-right-arrow icon-arrow-right"></span>
-                                </span>
+                                <a class="{% if model.current %}current{% endif %} sidebar-link"
+                                    {% if model.url %} href="{{ model.url }}"{% endif %}
+                                    {% if model.url_blank %} target="_blank"{% endif %}
+                                >
+                                    <span class="sidebar-right">
+                                        <span class="sidebar-right-arrow icon-arrow-right"></span>
+                                    </span>
                                     <span class="sidebar-link-label">{{ model.label }}</span>
                                 </a>
                             </div>
@@ -48,12 +50,13 @@
             <div class="apps-list-pinned">
                 {% for app in app_list %}
                     {% if app.has_perms and app.pinned %}
-                        <a{% if app.url %} href="{{ app.url }}"{% endif %}
+                        <a class="{% if app.current %}current{% endif %} sidebar-link popup-section-link app-item"
+                           data-app-label="{{ app.app_label }}"
+                           data-popup-section-class="sidebar-popup-section-{{ app.app_label }}"
+                           data-order="{{ forloop.counter }}"
+                            {% if app.url %} href="{{ app.url }}"{% endif %}
                             {% if app.url_blank %} target="_blank"{% endif %}
-                                           class="sidebar-link popup-section-link app-item"
-                                           data-app-label="{{ app.app_label }}"
-                                           data-popup-section-class="sidebar-popup-section-{{ app.app_label }}"
-                                           data-order="{{ forloop.counter }}">
+                        >
                             <span class="sidebar-left collapsible">
                                 <span class="sidebar-left-pin icon-star pin-toggle"></span>
                                 <span class="sidebar-left-unpin icon-cross pin-toggle"></span>
@@ -76,25 +79,23 @@
             <div class="apps-list">
                 {% for app in app_list %}
                     {% if app.has_perms and not app.pinned %}
-                        <a{% if app.url %} href="{{ app.url }}"{% endif %}
-                                           class="sidebar-link popup-section-link app-item"
-                                           data-app-label="{{ app.app_label }}"
-                                           data-popup-section-class="sidebar-popup-section-{{ app.app_label }}"
-                                           data-order="{{ forloop.counter }}"
-                            {% if app.url_blank %}
-                                           target="_blank"{% endif %}>
-                        <span class="sidebar-left collapsible">
-                            <span class="sidebar-left-pin icon-star pin-toggle"></span>
-                            <span class="sidebar-left-unpin icon-cross pin-toggle"></span>
-                        </span>
-
+                        <a class="{% if app.current %}current{% endif %} sidebar-link popup-section-link app-item"
+                           data-app-label="{{ app.app_label }}"
+                           data-popup-section-class="sidebar-popup-section-{{ app.app_label }}"
+                           data-order="{{ forloop.counter }}"{% if app.url %}
+                           href="{{ app.url }}"{% endif %}
+                           {% if app.url_blank %}target="_blank"{% endif %}
+                        >
+                            <span class="sidebar-left collapsible">
+                                <span class="sidebar-left-pin icon-star pin-toggle"></span>
+                                <span class="sidebar-left-unpin icon-cross pin-toggle"></span>
+                            </span>
                             <span class="sidebar-right">
-                            <span class="sidebar-right-arrow icon-arrow-right"></span>
-                        </span>
-
+                                <span class="sidebar-right-arrow icon-arrow-right"></span>
+                            </span>
                             <span class="sidebar-link-label">
-                            {{ app.label }}
-                        </span>
+                                {{ app.label }}
+                            </span>
                         </a>
                     {% endif %}
                 {% endfor %}

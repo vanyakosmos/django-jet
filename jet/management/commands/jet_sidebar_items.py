@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand, CommandError
 
-from jet.utils import get_original_menu_items
+from jet.sidebar import get_original_menu_items
 
 
 class Command(BaseCommand):
@@ -32,19 +32,11 @@ class Command(BaseCommand):
             'user': None
         })
 
-        self.stdout.write('# Add this to your settings.py to customize applications and models list')
-        self.stdout.write('JET_SIDE_MENU_ITEMS = [')
-
+        self.stdout.write("# Add this to your settings.py to customize applications and models list")
+        self.stdout.write("JET_SIDE_MENU_ITEMS = [")
         for app in app_list:
-            self.stdout.write('    {\'app_label\': \'%s\', \'items\': [' % (
-                app['app_label']
-            ))
-
-            for model in app['models']:
-                self.stdout.write('        {\'name\': \'%s\'},' % (
-                    model['name']
-                ))
-
-            self.stdout.write('    ]},')
-
-        self.stdout.write(']')
+            self.stdout.write("    {'app_label': '%s', 'items': [" % (app.app_label,))
+            for model in app.models:
+                self.stdout.write("        {'name': '%s'}," % (model.name,))
+            self.stdout.write("    ]},")
+        self.stdout.write("]")

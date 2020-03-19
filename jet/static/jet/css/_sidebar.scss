@@ -191,7 +191,7 @@
         transition: color $transitions-duration;
       }
 
-      &:hover {
+      &:hover, &.selected, &.current {
         color: $sidebar-hover-title-action-item-color;
       }
     }
@@ -218,6 +218,10 @@
         font-size: 11px;
         text-transform: uppercase;
       }
+    }
+
+    &.current {
+      background-color: $sidebar-hover-background-color;
     }
 
     &:hover, &.selected {
@@ -536,7 +540,11 @@
           }
         }
 
-        &.selected a {
+        &.current a {
+          font-weight: bold;
+        }
+
+        &.selected a{
           background-color: $sidebar-popup-hover-link-background-color;
           color: $sidebar-popup-hover-link-color;
         }

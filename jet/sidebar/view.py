@@ -6,6 +6,8 @@ from django.template import loader
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
+from .config import get_menu_items
+
 
 class Section:
     # position in the sidebar
@@ -149,10 +151,9 @@ class AppsSection(Section):
         self._apps = []
 
     def get_context_data(self, request, context):
-        from jet.utils import get_menu_items
         self._apps = [
             app for app in get_menu_items(context)
-            if app.get('has_perms')
+            if app.has_perms
         ]
         context = super(AppsSection, self).get_context_data(request, context)
         context['app_list'] = self._apps

@@ -31,12 +31,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'template_profiler_panel',
     'core.apps.CoreConfig',
     'app.apps.AppConfig',
 ]
 
 MIDDLEWARE = [
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -112,7 +114,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 # Logging
 
 LOGGING = {
@@ -139,7 +140,6 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
-
 
 # Jet
 
@@ -186,6 +186,30 @@ JET_APP_INDEX_DASHBOARD = {
     'app': 'jet.dashboard.dashboard.DefaultAppIndexDashboard',  # redundant
     'core': 'core.dashboard.CustomAppIndexDashboard',  # custom
 }
+JET_SIDE_MENU_ITEMS = [
+    {'app_label': 'app', 'items': [
+        {'name': 'author'},
+        {'name': 'book'},
+        {'name': 'review'},
+    ]},
+    {'app_label': 'auth', 'items': [
+        {'name': 'group'},
+        {'name': 'permission'},
+        {'name': 'user'},
+    ]},
+    {'app_label': 'contenttypes', 'items': [
+        {'name': 'contenttype'},
+    ]},
+    {'app_label': 'core', 'items': [
+        {'name': 'coreauthor'},
+    ]},
+    {'label': 'extra', 'items': [
+        {'url': 'https://google.com', "label": "google"},
+        {'name': 'core.coreauthor'},
+    ]},
+]
+
+# debug toolbar
 
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',
