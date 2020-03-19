@@ -4,6 +4,12 @@
 ## Unpublished
 
 
+## 1.0.9-alpha.6
+
+- improve sidebar
+- fix styles
+
+
 ## 1.0.9-alpha.5
 
 - fix date/time widgets padding
