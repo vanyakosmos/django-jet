@@ -42,7 +42,12 @@ function scripts() {
 }
 
 function styles() {
-    return gulp.src('./jet/static/jet/css/**/*.scss')
+    const src = prod ? './jet/static/jet/css/**/*.scss' : [
+        './jet/static/jet/css/**/*.scss',
+        '!./jet/static/jet/css/themes/green/*.scss',
+        '!./jet/static/jet/css/themes/light-*/*.scss',
+    ];
+    return gulp.src(src)
         .pipe(sourcemaps.init())
         .pipe(sass(prod ? {outputStyle: 'compressed'} : {}))
         .on('error', function (error) {
@@ -60,6 +65,8 @@ function vendorStyles() {
     return merge(
         gulp.src('./node_modules/jquery-ui/themes/base/images/*')
             .pipe(gulp.dest('./jet/static/jet/css/jquery-ui/images/')),
+        gulp.src('./node_modules/@fortawesome/fontawesome-free/webfonts/*')
+            .pipe(gulp.dest('./jet/static/jet/css/webfonts')),
         merge(
             gulp.src([
                 './node_modules/select2/dist/css/select2.css',

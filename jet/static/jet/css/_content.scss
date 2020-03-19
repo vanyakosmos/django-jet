@@ -5,7 +5,6 @@
 
 a, a:visited, a:hover, a:focus {
   color: $link-color;
-  font-weight: normal;
   text-decoration: none;
 }
 
@@ -17,14 +16,6 @@ a img {
   border: none;
 }
 
-//a.section:link, a.section:visited {
-//    color: #fff;
-//    text-decoration: none;
-//}
-//
-//a.section:focus, a.section:hover {
-//    text-decoration: underline;
-//}
 
 /* GLOBAL DEFAULTS */
 
@@ -221,8 +212,6 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
   vertical-align: middle;
 
   &:before {
-    @include font-icon;
-    content: $icon-add3;
     vertical-align: middle;
     margin-right: 4px;
   }
@@ -232,30 +221,6 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
   vertical-align: middle;
 
   &:before {
-    @include font-icon;
-    content: $icon-edit;
-    vertical-align: middle;
-    margin-right: 4px;
-  }
-}
-
-.deletelink {
-  vertical-align: middle;
-
-  &:before {
-    @include font-icon;
-    content: $icon-cross;
-    vertical-align: middle;
-    margin-right: 4px;
-  }
-}
-
-.inlineviewlink {
-  vertical-align: middle;
-
-  &:before {
-    @include font-icon;
-    content: $icon-open-external;
     vertical-align: middle;
     margin-right: 4px;
   }

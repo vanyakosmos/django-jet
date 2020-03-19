@@ -9,7 +9,6 @@
   padding: 14px 32px 14px 36px;
   text-align: center;
   position: relative;
-  height: auto !important;
   min-height: 52px;
   box-sizing: border-box;
 
@@ -53,15 +52,14 @@
     position: absolute;
     top: 50%;
     right: 4px;
-    margin-top: -11px;
+    margin-top: -7px;
     display: inline-block;
-    font-size: 22px;
     cursor: pointer;
     transition: transform 0.3s;
-    transform: rotate(-45deg);
+    transform: rotate(0);
 
     body.menu-pinned & {
-      transform: rotate(45deg);
+      transform: rotate(90deg);
     }
 
     &:hover {

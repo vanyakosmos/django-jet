@@ -102,7 +102,7 @@
         font-size: 16px;
         vertical-align: middle;
 
-        &.icon-cross {
+        &.cross {
           display: none;
           font-size: 20px;
           color: $sidebar-action-color;
@@ -111,11 +111,11 @@
     }
 
     &.sidebar-opened &-menu-icon {
-      &.icon-menu {
+      &.menu {
         display: none;
       }
 
-      &.icon-cross {
+      &.cross {
         display: inline;
       }
     }
@@ -230,8 +230,7 @@
     }
 
     &-icon {
-      font-size: 18px;
-      vertical-align: middle;
+      font-size: 14px;
       margin-right: 6px;
       color: $sidebar-icon-color;
       transition: color $transitions-duration;

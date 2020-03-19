@@ -9,19 +9,19 @@
         {% for entry in module.children %}
             <li>
                 <span class="float-right">
-                    <span class="icon-user tooltip" title="{{ entry.user }}"></span>
-                    <span class="icon-clock tooltip" title="{{ entry.action_time }}"></span>
+                    <span class="fas fa-user-tie tooltip" title="{{ entry.user }}"></span>
+                    <span class="far fa-clock tooltip" title="{{ entry.action_time }}"></span>
                 </span>
 
                 <div class="nowrap">
                     {% if entry.is_addition %}
-                        <span class="icon-add3"></span>
+                        <span class="icon fas fa-plus-square"></span>
                     {% endif %}
                     {% if entry.is_change %}
-                        <span class="icon-edit"></span>
+                        <span class="icon fas fa-edit"></span>
                     {% endif %}
                     {% if entry.is_deletion %}
-                        <span class="icon-cross"></span>
+                        <span class="icon fas fa-trash-alt"></span>
                     {% endif %}
 
                     {% if entry.content_type %}

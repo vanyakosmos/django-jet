@@ -374,6 +374,10 @@ ul.actionlist li {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        .icon {
+          width: 1.2rem;
+        }
       }
 
       canvas {
@@ -414,11 +418,15 @@ ul.actionlist li {
       }
     }
 
-    &-collapse .icon-arrow-up {
+    &-collapse-title {
+      margin-left: 2px;
+    }
+
+    &-collapse .up {
       display: inline;
     }
 
-    &-collapse .icon-arrow-down {
+    &-collapse .down {
       display: none;
     }
 
@@ -426,11 +434,11 @@ ul.actionlist li {
       display: none;
     }
 
-    &.collapsed &-collapse .icon-arrow-up {
+    &.collapsed &-collapse .up {
       display: none;
     }
 
-    &.collapsed &-collapse .icon-arrow-down {
+    &.collapsed &-collapse .down {
       display: inline;
     }
   }

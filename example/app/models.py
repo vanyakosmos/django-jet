@@ -18,7 +18,7 @@ class Book(models.Model):
     published = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.title!r} by {self.authors_list}"
+        return self.title
 
     @property
     def authors_list(self):

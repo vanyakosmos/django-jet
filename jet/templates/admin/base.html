@@ -52,8 +52,8 @@
     <!-- Header -->
     <div id="header">
         <div id="branding">
-            <span id="branding-menu" class="sidebar-header-menu-icon icon-menu sidebar-toggle"></span>
-            <span id="branding-pin" class="sidebar-link-icon icon-pin sidebar-pin"></span>
+            <span id="branding-menu" class="sidebar-header-menu-icon fas fa-bars sidebar-toggle"></span>
+            <span id="branding-pin" class="sidebar-link-icon fas fa-thumbtack sidebar-pin"></span>
             {% block branding %}{% endblock %}
         </div>
         {% block usertools %}
@@ -124,7 +124,7 @@
             {% spaceless %}
                 {% jet_previous_object as sibling %}
                 <a{% if sibling.url %} href="{{ sibling.url }}"{% endif %} class="changeform-navigation-button segmented-button left{% if not sibling %} disabled{% endif %}" title="{{ sibling.label }}">
-                    <span class="changeform-navigation-button-icon left icon-arrow-left"></span>
+                    <span class="changeform-navigation-button-icon left fas fa-chevron-left"></span>
                     <span class="changeform-navigation-button-label">
                         {% if sibling %}
                             {{ sibling.label }}
@@ -136,7 +136,7 @@
 
                 {% jet_next_object as sibling %}
                 <a{% if sibling.url %} href="{{ sibling.url }}"{% endif %} class="changeform-navigation-button segmented-button right{% if not sibling %} disabled{% endif %}" title="{{ sibling.label }}">
-                    <span class="changeform-navigation-button-icon right icon-arrow-right"></span>
+                    <span class="changeform-navigation-button-icon right fas fa-chevron-right"></span>
                     <span class="changeform-navigation-button-label">
                         {% if sibling %}
                             {{ sibling.label }}
@@ -153,17 +153,17 @@
     {% if not is_popup %}
         <div class="related-popup-container scrollable">
             <a href="#" class="related-popup-back">
-                <span class="related-popup-back-icon icon-arrow-left"></span>
+                <span class="related-popup-back-icon fas fa-chevron-left"></span>
                 <span class="related-popup-back-label">{% trans "back" %}</span>
             </a>
-            <span class="icon-refresh loading-indicator"></span>
+            <span class="fas fa-sync-alt loading-indicator"></span>
         </div>
 
         <div class="sidebar-header-wrapper sidebar-dependent">
             <div class="sidebar-header sidebar-dependent">
                 <a href="#" class="sidebar-header-menu sidebar-toggle">
-                    <span class="sidebar-header-menu-icon icon-menu"></span>
-                    <span class="sidebar-header-menu-icon icon-cross"></span>
+                    <span class="sidebar-header-menu-icon menu fas fa-bars"></span>
+                    <span class="sidebar-header-menu-icon cross fas fa-times"></span>
                 </a>
             </div>
         </div>

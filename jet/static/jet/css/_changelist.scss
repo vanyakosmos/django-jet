@@ -6,6 +6,10 @@
   position: relative;
   width: 100%;
 
+  a, a:visited, a:hover, a:focus {
+    font-weight: normal;
+  }
+
   table {
     width: 100%;
   }

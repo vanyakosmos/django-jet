@@ -1,6 +1,7 @@
 {
   "name": "django-jet",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "autoprefixer": "9.7.4",
     "browserify": "16.5.0",
     "browsernizr": "2.3.0",
