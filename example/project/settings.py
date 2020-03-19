@@ -177,15 +177,15 @@ JET_THEMES = [
     }
 ]
 JET_SIDE_MENU_COMPACT = True
-# JET_SIDE_MENU_ITEMS = []
 JET_CHANGE_FORM_SIBLING_LINKS = True
 JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.MinimalIndexDashboard'
-# JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'  # ok
+# JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'  # overrider all
 JET_APP_INDEX_DASHBOARD = {
     None: 'jet.dashboard.dashboard.DefaultAppIndexDashboard',  # override default
     'app': 'jet.dashboard.dashboard.DefaultAppIndexDashboard',  # redundant
     'core': 'core.dashboard.CustomAppIndexDashboard',  # custom
 }
+# JET_SIDE_MENU_CLS = 'core.sidebar.Sidebar'
 JET_SIDE_MENU_ITEMS = [
     {'app_label': 'app', 'items': [
         {'name': 'author'},

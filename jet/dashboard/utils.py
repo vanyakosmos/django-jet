@@ -1,21 +1,11 @@
 import logging
-from importlib import import_module
 from typing import Union
 
 from jet.dashboard import settings
+from jet.utils import import_value
 
 
 logger = logging.getLogger(__name__)
-
-
-def import_value(path: str):
-    module, name = path.rsplit('.', 1)
-    try:
-        module = import_module(module)
-        value = getattr(module, name)
-    except (ImportError, AttributeError) as e:
-        raise ImportError(e)
-    return value
 
 
 def get_app_dashboard_config(config: Union[str, dict]):

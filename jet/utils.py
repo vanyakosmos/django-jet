@@ -1,6 +1,7 @@
 import datetime
 import json
 import logging
+from importlib import import_module
 
 from django.apps.registry import apps
 from django.contrib import admin, messages
@@ -269,3 +270,13 @@ def format_widget_data(data: dict):
         key = f'data-{key}'
         res[key] = value
     return res
+
+
+def import_value(path: str):
+    module, name = path.rsplit('.', 1)
+    try:
+        module = import_module(module)
+        value = getattr(module, name)
+    except (ImportError, AttributeError) as e:
+        raise ImportError(e)
+    return value

@@ -1,176 +1,101 @@
-import itertools
-from typing import List
+from typing import Any, Dict, List
 
-from django.dispatch import Signal
 from django.template import loader
-from django.utils.functional import cached_property
-from django.utils.safestring import mark_safe
+from django.template.context import BaseContext
 
 from .config import get_menu_items
 
 
 class Section:
-    # position in the sidebar
-    order = 0
-    # menu title
-    title = None
-    # template used to render section
-    template_name = ''
+    template_name = None
 
-    def get_context_data(self, request, context):
-        return {
-            'self': self,
-            'request': request,
-            **context.flatten(),
-        }
+    def __init__(self, template_name=None):
+        self.template_name = self.template_name or template_name
+        self.context = None  # will be populated in render()
 
-    def render(self, request, context):
-        context = self.get_context_data(request, context)
-        if context is None:
-            return ''
-        return mark_safe(
-            loader.get_template(self.template_name).render(context)
-        )
+    def get_context_data(self, context) -> Dict[str, Any]:
+        if isinstance(context, BaseContext):
+            context = context.flatten()
+        return {**context, 'self': self}
+
+    def get_extra_context(self):
+        return {}
+
+    def init_with_context(self, context):
+        """Hook which will be called before rendering."""
+
+    def render(self, context):
+        self.context = self.get_context_data(context)
+        self.init_with_context(self.context)
+        self.context.update(self.get_extra_context())
+        return loader.render_to_string(self.template_name, self.context)
 
     def popups(self) -> List['Section']:
-        """Submenus."""
         return []
 
-    def __lt__(self, other: 'Section'):
-        return self.order < other.order
-
-
-class Sidebar(Section):
-    signal = Signal(['request', 'context', 'sections'])
-    # request being processed
-    request = None
-    # context of the page that being rendered
-    context = None
-    # Always rendered sections
-    static_sections = []
-
-    template_name = 'jet/sidebar/sidebar.html'
-
-    def __init__(self, request, context):
-        self.request = request
-        self.context = context
-
-    @classmethod
-    def connect(cls, *args, **kwargs):
-        cls.signal.connect(*args, **kwargs)
-
-    @classmethod
-    def disconnect(cls, *args, **kwargs):
-        cls.signal.disconnect(*args, **kwargs)
-
-    @classmethod
-    def add(cls, section):
-        """
-        Add a section to the static sections
-        """
-        cls.static_sections.append(section)
-        cls.static_sections.sort()
-
-    @classmethod
-    def remove(cls, section):
-        """
-        Remove a section from static sections
-        """
-        cls.static_sections.remove(section)
-
-    @cached_property
-    def sections(self):
-        """
-        Gather items by triggering signal, and return them sorted by priority.
-        """
-        sections = []
-        results = (
-            v for r, v in
-            self.signal.send(
-                sender=self,
-                request=self.request,
-                context=self.context,
-                sections=sections,
-            )
-            if isinstance(v, Section)
-        )
-        return sorted(itertools.chain(
-            self.static_sections, sections, results
-        ))
-
-    def get_context_data(self, request, context):
-        context = super(Sidebar, self).get_context_data(request, context)
-        return context
-
-    def render(self, request=None, context=None):
-        request = request or self.request
-        context = context or self.context
-        return super(Sidebar, self).render(request, context)
-
-    def popups(self):
-        return itertools.chain.from_iterable(
-            item.popups() for item in self.sections
-        )
-
-    def render_sections(self):
-        return [
-            section.render(self.request, self.context)
-            for section in self.sections
-        ]
-
     def render_popups(self):
-        return [
-            section.render(self.request, self.context)
-            for section in self.popups()
-        ]
+        for section in self.popups():
+            yield section.render(self.context)
 
 
 class NavSection(Section):
     template_name = 'jet/sidebar/section_nav.html'
-    order = 1000
 
 
 class AppPopup(Section):
     template_name = 'jet/sidebar/popup_app.html'
-    app = None
 
-    def __init__(self, app):
+    def __init__(self, app, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.app = app
 
-    def get_context_data(self, request, context):
-        context = super(AppPopup, self).get_context_data(request, context)
-        context['app'] = self.app
-        return context
+    def get_extra_context(self):
+        return {'app': self.app}
 
 
 class AppsSection(Section):
     template_name = 'jet/sidebar/section_apps.html'
-    order = 2000
 
-    def __init__(self):
-        self._apps = []
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apps = []
 
-    def get_context_data(self, request, context):
-        self._apps = [
+    def get_extra_context(self):
+        return {'app_list': self.apps}
+
+    def init_with_context(self, context):
+        self.apps = [
             app for app in get_menu_items(context)
             if app.has_perms
         ]
-        context = super(AppsSection, self).get_context_data(request, context)
-        context['app_list'] = self._apps
-        return context
 
     def popups(self):
-        return [AppPopup(app) for app in self._apps]
+        return [AppPopup(app) for app in self.apps]
 
 
 class BookmarkSection(Section):
     template_name = 'jet/sidebar/section_bookmarks.html'
-    order = 3000
 
 
-# default sections to render in sidebar
-Sidebar.static_sections.extend([
-    NavSection(),
-    AppsSection(),
-    BookmarkSection(),
-])
+class Sidebar(Section):
+    template_name = 'jet/sidebar/sidebar.html'
+
+    def __init__(self, *args, **kwargs):
+        super(Sidebar, self).__init__(*args, **kwargs)
+        self.sections: List[Section] = []
+
+    def init_with_context(self, context):
+        self.sections = [
+            NavSection(),
+            AppsSection(),
+        ]
+        if context['request'].user.has_perm('jet.change_bookmark'):
+            self.sections.append(BookmarkSection())
+
+    def popups(self):
+        for item in self.sections:
+            yield from item.popups()
+
+    def render_sections(self):
+        for section in self.sections:
+            yield section.render(self.context)

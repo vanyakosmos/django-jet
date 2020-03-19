@@ -18,12 +18,13 @@ from jet.models import Bookmark
 from jet.sidebar import Sidebar, get_menu_items
 from jet.utils import (
     format_widget_data, get_admin_site, get_model_instance_label,
-    get_model_queryset, get_possible_language_codes,
+    get_model_queryset, get_possible_language_codes, import_value,
 )
 
 
 register = template.Library()
 assignment_tag = register.assignment_tag if hasattr(register, 'assignment_tag') else register.simple_tag
+Sidebar = import_value(settings.JET_SIDE_MENU_CLS)
 
 
 @assignment_tag
@@ -271,4 +272,4 @@ def jet_static_translation_urls():
 
 @register.simple_tag(takes_context=True)
 def jet_render_sidebar(context):
-    return Sidebar(context.get('request'), context).render()
+    return Sidebar().render(context)
