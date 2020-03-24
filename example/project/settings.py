@@ -13,12 +13,12 @@ SECRET_KEY = '4jouvq2qh+nb$j!d19d!%y+k)svxc6)c)#_h6or*q&9a!8!y*-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-X_FRAME_OPTIONS = 'SAMEORIGIN'
 INTERNAL_IPS = [
     '0.0.0.0',
     '127.0.0.1',
 ]
+ALLOWED_HOSTS = [*INTERNAL_IPS, 'localhost']
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Application definition
 

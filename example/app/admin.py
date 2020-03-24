@@ -9,8 +9,13 @@ from .models import Author, Book, Review
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'has_books')
     list_per_page = 5
+
+    def has_books(self, a: Author):
+        return a.book_set.exists()
+
+    has_books.boolean = True
 
 
 class AuthorInline(admin.StackedInline):
