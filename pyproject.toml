@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "djet2"
-version = "1.0.9-alpha.7"
+version = "1.0.9-alpha.8"
 description = "Modern template for Django admin interface with improved functionality"
 authors = ["Denis Kildishev <support@jet.geex-arts.com>"]
 maintainers = ["Bachynin Ivan <bachynin.i@gmail.com>"]
