@@ -188,7 +188,6 @@ JET_APP_INDEX_DASHBOARD = {
 # JET_SIDE_MENU_CLS = 'core.sidebar.Sidebar'
 JET_SIDE_MENU_ITEMS = [
     {'app_label': 'app', 'items': [
-        {'name': 'author'},
         {'name': 'book'},
         {'name': 'review'},
     ]},
@@ -201,6 +200,7 @@ JET_SIDE_MENU_ITEMS = [
         {'name': 'contenttype'},
     ]},
     {'app_label': 'core', 'items': [
+        {'name': 'app.author'},
         {'name': 'coreauthor'},
     ]},
     {'label': 'extra', 'items': [

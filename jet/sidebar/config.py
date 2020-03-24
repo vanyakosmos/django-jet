@@ -89,24 +89,6 @@ def get_original_menu_items(context) -> List[MenuSection]:
         for app in get_app_list(context)
     ]
 
-    # return map(lambda app: {
-    #     'app_label': app['app_label'],
-    #     'url': app['app_url'],
-    #     'url_blank': False,
-    #     'label': app.get('name', capfirst(_(app['app_label']))),
-    #     'has_perms': app.get('has_module_perms', False),
-    #     'models': list(map(lambda model: {
-    #         'url': model.get('admin_url'),
-    #         'url_blank': False,
-    #         'name': model['model_name'],
-    #         'object_name': model['object_name'],
-    #         'label': model.get('name', model['object_name']),
-    #         'has_perms': any(model.get('perms', {}).values()),
-    #     }, app['models'])),
-    #     'pinned': app['app_label'] in pinned_apps,
-    #     'custom': False
-    # }, app_list)
-
 
 class MenuBuilder:
     def __init__(self, context):
@@ -207,6 +189,8 @@ class MenuBuilder:
                 if model.url and self.context['request'].path.startswith(model.url):
                     model.current = True
                     return
+        # second loop because model can be placed into another app
+        for app in apps:
             if app.url and self.context['request'].path.startswith(app.url):
                 app.current = True
                 return
