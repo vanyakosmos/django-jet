@@ -17,12 +17,14 @@ class AuthorInline(admin.StackedInline):
     model = Book.authors.through
     extra = 0
     show_change_link = True
+    classes = ('follow',)
 
 
 class ReviewInline(CompactInline):
     model = Review
     extra = 0
     show_change_link = True
+    classes = ('follow',)
 
 
 @admin.register(Book)

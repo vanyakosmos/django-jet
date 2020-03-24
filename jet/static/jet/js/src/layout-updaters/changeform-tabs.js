@@ -10,9 +10,11 @@ ChangeFormTabsUpdater.prototype = {
         const tabs = [];
 
         let j = 0;
-        $modules.each(function (i) {
+        $modules.each(function () {
             const $module = $(this);
-            if (i !== 0 && !$module.hasClass('follow')) {
+            const follow = $module.hasClass('follow');
+
+            if (tabs.length !== 0 && !follow) {
                 j++;
             }
 
@@ -21,7 +23,7 @@ ChangeFormTabsUpdater.prototype = {
             const className = 'module_' + j;
 
             $module.addClass(className);
-            if (!$module.hasClass('follow')) {
+            if (!follow) {
                 $header.remove();
                 tabs.push({
                     className: className,
@@ -30,19 +32,26 @@ ChangeFormTabsUpdater.prototype = {
             }
         });
 
-        $inlines.each(function (i) {
+        $inlines.each(function () {
             const $inline = $(this);
+            const follow = $inline.find('fieldset').hasClass('follow');
+
+            if (tabs.length !== 0 && !follow) {
+                j++;
+            }
+
             const $header = $inline.find('> h2, > fieldset.module > h2, .tabular.inline-related > .module > h2').first();
             const title = $header.length !== 0 ? $header.html() : t('General');
-            const className = 'inline_' + i;
+            const className = 'module_' + j;
 
             $inline.addClass(className);
-            $header.remove();
-
-            tabs.push({
-                className: className,
-                title: title
-            });
+            if (!follow) {
+                $header.remove();
+                tabs.push({
+                    className: className,
+                    title: title
+                });
+            }
         });
 
         return tabs;
