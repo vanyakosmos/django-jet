@@ -3,7 +3,11 @@
 
 ## Unpublished
 
+
+## 1.0.9-alpha.7
+
 - manageable default collapsed state for dashboard module
+- followable inline modules in changeform
 
 
 ## 1.0.9-alpha.6
