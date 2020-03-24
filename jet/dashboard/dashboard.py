@@ -1,4 +1,5 @@
 from importlib import import_module
+from typing import List
 
 from django.template.context_processors import csrf
 from django.template.loader import render_to_string
@@ -11,7 +12,7 @@ from jet.dashboard.models import UserDashboardModule
 from jet.utils import context_to_dict, get_admin_site_name
 
 
-class Dashboard(object):
+class Dashboard:
     """
     Base dashboard class. All custom dashboards should inherit it.
     """
@@ -41,7 +42,7 @@ class Dashboard(object):
         for key in kwargs:
             if hasattr(self.__class__, key):
                 setattr(self, key, kwargs[key])
-        self.children = self.children or []
+        self.children: List[modules.DashboardModule] = self.children or []
         self.available_children = self.available_children or []
         self.set_context(context)
 
@@ -103,15 +104,12 @@ class Dashboard(object):
         return module
 
     def create_initial_module_models(self, user):
-        module_models = []
-
-        i = 0
-
-        for module in self.children:
+        models = []
+        for i, module in enumerate(self.children):
             column = module.column if module.column is not None else i % self.columns
             order = module.order if module.order is not None else int(i / self.columns)
-
-            module_models.append(UserDashboardModule.objects.create(
+            # don't use bulk_create because pk will not be populated
+            models.append(UserDashboardModule.objects.create(
                 title=module.title,
                 app_label=self.app_label,
                 user=user.pk,
@@ -119,11 +117,10 @@ class Dashboard(object):
                 column=column,
                 order=order,
                 settings=module.dump_settings(),
-                children=module.dump_children()
+                children=module.dump_children(),
+                collapsed=module.collapsed,
             ))
-            i += 1
-
-        return module_models
+        return models
 
     def load_modules(self):
         module_models = UserDashboardModule.objects.filter(

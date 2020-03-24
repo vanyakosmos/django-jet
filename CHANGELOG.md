@@ -3,6 +3,8 @@
 
 ## Unpublished
 
+- manageable default collapsed state for dashboard module
+
 
 ## 1.0.9-alpha.6
 

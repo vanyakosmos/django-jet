@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from jet.utils import LazyDateTimeEncoder, context_to_dict
 
 
-class DashboardModule(object):
+class DashboardModule:
     """
     Base dashboard module class. All dashboard modules (widgets) should inherit it.
     """
@@ -19,6 +19,7 @@ class DashboardModule(object):
 
     #: Specify if module can be collapsed.
     collapsible = True
+    collapsed = False
 
     #: Specify if module can be deleted.
     deletable = True
