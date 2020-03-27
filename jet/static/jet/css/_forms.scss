@@ -38,9 +38,13 @@
     background-color: transparent;
   }
 
-  &:hover, &:focus {
+  &:hover:not([disabled]), &:focus:not([disabled]) {
     background-color: $button-hover-background-color;
     color: $button-hover-text-color;
+    cursor: pointer;
+  }
+  &:hover[disabled], &:focus[disabled] {
+    cursor: not-allowed;
   }
 
   &:active {
