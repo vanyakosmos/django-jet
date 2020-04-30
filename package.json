@@ -16,7 +16,7 @@
     "gulp-shell": "0.8.0",
     "gulp-sourcemaps": "2.6.5",
     "gulp-uglify-es": "^2.0.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "jquery-ui": "git://github.com/jquery/jquery-ui#1.12.1",
     "jquery-ui-bundle": "^1.12.1-migrate",
     "jquery.cookie": "1.4.1",
